@@ -80,9 +80,10 @@ void RadarPredictor::process(const MatrixXd sigma_x){
   this->S = this->compute_S(sigma_z, this->z);
 }
 
-MatrixXd RadarPredictor::getz() const {
+VectorXd RadarPredictor::getz() const {
   return this->z;
 }
+
 MatrixXd RadarPredictor::getS() const {
   return this->S;
 }

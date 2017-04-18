@@ -48,7 +48,7 @@ class RadarPredictor{
     RadarPredictor(const VectorXd w);
     void process(const MatrixXd sigma_x);
     MatrixXd getS() const;
-    MatrixXd getz() const;
+    VectorXd getz() const;
 };
 
 #endif //RADARPREDICTOR_H_
