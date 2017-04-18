@@ -34,7 +34,7 @@ class RadarPredictor{
      const double var_phi = std_phi * std_phi;
      const double var_rhodot = std_rhodot * std_rhodot;
 
-     VectorXd w = VectorXd(nsigma); // weights for the mean measurement predcition
+     VectorXd w = VectorXd(nsigma); // weights for the mean measurement prediction
      MatrixXd R = MatrixXd(nz, nz); //noise covariance matrix
      VectorXd z = VectorXd(nz); // mean predicted measurement
      MatrixXd S = MatrixXd(nz, nz); // measurement covariance matrix
