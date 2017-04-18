@@ -6,8 +6,6 @@
 #include <sstream>
 #include <vector>
 #include <stdlib.h>
-
-#include <vector>
 #include "../src/Eigen/Dense"
 
 using namespace std;
