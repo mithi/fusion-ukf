@@ -39,7 +39,6 @@ int main(){
   0.352, 0.29997, 0.46212, 0.37633,  0.4841, 0.41872,   0.352, 0.38744, 0.40562, 0.24347, 0.32926,  0.2214, 0.28687,   0.352, 0.318159;
 
   RadarPredictor radarPredictor(w);
-  cout << "before radarPredictor processing " << endl;
 
   radarPredictor.process(predicted_sigma_x);
   cout << "predicted radar measurement vector z:" << endl;
