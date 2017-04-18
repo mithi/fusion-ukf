@@ -14,6 +14,7 @@ double normalize(const double a){
 
   return b;
 }
+
 VectorXd calculate_RMSE(const vector<VectorXd> &estimations, const vector<VectorXd> &ground_truths){
 
   VectorXd rmse(4);
