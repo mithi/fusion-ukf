@@ -7,6 +7,7 @@ include_directories(headers)
 
 set(SOURCES src/main.cpp
             src/tools.cpp
-            src/radarpredictor.cpp )
+            src/radarpredictor.cpp
+            src/statepredictor.cpp )
 
 add_executable(UnscentedKF ${SOURCES})
