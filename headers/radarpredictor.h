@@ -40,9 +40,9 @@ class RadarPredictor{
      MatrixXd S = MatrixXd(nz, nz); // measurement covariance matrix
 
      // PRIVATE FUNCTIONS
-     MatrixXd calculate_sigma_z(const MatrixXd sigma_x);
-     MatrixXd calculate_z(const MatrixXd sigma_z);
-     MatrixXd calculate_S(const MatrixXd sigma_z, const MatrixXd predicted_z);
+     MatrixXd compute_sigma_z(const MatrixXd sigma_x);
+     MatrixXd compute_z(const MatrixXd sigma_z);
+     MatrixXd compute_S(const MatrixXd sigma_z, const MatrixXd predicted_z);
 
   public:
     RadarPredictor(const VectorXd w);
