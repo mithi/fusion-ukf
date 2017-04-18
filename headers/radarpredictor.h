@@ -10,16 +10,17 @@ using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-class RadarPredictor{
-   /******************************
-    RadarPredictor is a class responsible for
-    calculating the predicted measurement vector z
-    and measurement covariance matrix S
-    based on a given predicted sigma points matrix sigma_x
+/******************************
+ RadarPredictor is a class responsible for
+ calculating the predicted measurement vector z
+ and measurement covariance matrix S
+ based on a given predicted sigma points matrix sigma_x
 
-    After calling the process() giving the predicted_sigma
-    please call getS() and getz() to get the corresponding calculated values
-   *******************************/
+ After calling the process() giving the predicted_sigma
+ please call getS() and getz() to get the corresponding calculated values
+*******************************/
+
+class RadarPredictor{
 
    private:
      VectorXd w = VectorXd(NSIGMA); // weights for the mean measurement prediction

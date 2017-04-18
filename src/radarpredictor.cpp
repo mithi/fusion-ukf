@@ -71,10 +71,8 @@ void RadarPredictor::process(const MatrixXd sigma_x){
 
   // transform predicted sigma_x into measurement space
   MatrixXd sigma_z = this->compute_sigma_z(sigma_x);
-
   // get the mean predicted measurement vector z
   this->z = this->compute_z(sigma_z);
-
   // get the measurement covariance matrix S
   this->S = this->compute_S(sigma_z, this->z);
 }
