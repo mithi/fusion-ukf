@@ -1,22 +1,21 @@
 #include "radarpredictor.h"
 
-RadarPredictor::RadarPredictor(const VectorXd w){
+RadarPredictor::RadarPredictor(const VectorXd W){
 
-  this->R << this->var_rho, 0, 0,
-             0, this->var_phi, 0,
-             0, 0, this->var_rhodot;
+  this->R << VAR_RHO, 0, 0,
+             0, VAR_PHI, 0,
+             0, 0, VAR_RHODOT;
 
-  this->w = w;
-
+  this->w = W;
 }
 
 MatrixXd RadarPredictor::compute_sigma_z(const MatrixXd sigma_x){
 
-  double px, py, v, yaw, vx, vy, rho, phi, rho_dot;
-  MatrixXd sigma_z = MatrixXd(this->nz, this->nsigma);
+  double px, py, v, yaw, vx, vy, rho, phi, rhodot;
+  MatrixXd sigma_z = MatrixXd(NZ_RADAR, NSIGMA);
   sigma_z.fill(0.0);
 
-  for (int c = 0; c < this->nsigma; c++){
+  for (int c = 0; c < NSIGMA; c++){
 
     px = sigma_x(0, c);
     py = sigma_x(1, c);
@@ -28,11 +27,11 @@ MatrixXd RadarPredictor::compute_sigma_z(const MatrixXd sigma_x){
 
     rho = sqrt(px * px + py * py);
     phi = atan2(py, px);
-    rho_dot = (px * vx + py * vy) / rho;
+    rhodot = (px * vx + py * vy) / rho;
 
     sigma_z(0, c) = rho;
     sigma_z(1, c) = phi;
-    sigma_z(2, c) = rho_dot;
+    sigma_z(2, c) = rhodot;
   }
 
   return sigma_z;
@@ -40,10 +39,10 @@ MatrixXd RadarPredictor::compute_sigma_z(const MatrixXd sigma_x){
 
 MatrixXd RadarPredictor::compute_z(const MatrixXd sigma_z){
 
-  VectorXd z = VectorXd(this->nz);
+  VectorXd z = VectorXd(NZ_RADAR);
   z.fill(0.0);
 
-  for(int c = 0; c < this->nsigma; c++){
+  for(int c = 0; c < NSIGMA; c++){
     z += this->w(c) * sigma_z.col(c);
   }
 
@@ -52,11 +51,11 @@ MatrixXd RadarPredictor::compute_z(const MatrixXd sigma_z){
 
 MatrixXd RadarPredictor::compute_S(const MatrixXd sigma_z, const MatrixXd z){
 
-  VectorXd dz = VectorXd(this->nz);
-  MatrixXd S = MatrixXd(this->nz, this->nz);
+  VectorXd dz = VectorXd(NZ_RADAR);
+  MatrixXd S = MatrixXd(NZ_RADAR, NZ_RADAR);
   S.fill(0.0);
 
-  for (int c = 0; c < this->nsigma; c++){
+  for (int c = 0; c < NSIGMA; c++){
 
     dz = sigma_z.col(c) - z;
     dz(1) = normalize(dz(1));
