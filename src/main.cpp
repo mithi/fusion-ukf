@@ -7,25 +7,17 @@
 #include "settings.h"
 #include "radarpredictor.h"
 #include "statepredictor.h"
+#include "tests.h"
 
 using namespace std;
 using std::vector;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-void tests();
 
 int main(){
-
-  tests();
+  cout << "ALL TESTS SHOULD RETURN 1" << endl;
+  cout << "- StatePredictor Tests" << endl;
+  cout << "--- compute_augmented_sigma: "<< test_compute_augmented_sigma() << endl;
   return 0;
-}
-
-void tests(){
-
-  VectorXd WEIGHTS = VectorXd(NSIGMA);
-  WEIGHTS << w0, w, w, w, w, w, w, w, w, w, w, w, w, w, w;
-
-  StatePredictor statePredictor(WEIGHTS);
-  RadarPredictor radarPredictor(WEIGHTS);
 }
