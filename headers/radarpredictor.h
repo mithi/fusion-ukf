@@ -23,15 +23,11 @@ using Eigen::VectorXd;
 class RadarPredictor{
 
    private:
-     VectorXd w = VectorXd(NSIGMA); // weights for the mean measurement prediction
-     MatrixXd R = MatrixXd(NZ_RADAR, NZ_RADAR); // noise covariance matrix
-     VectorXd z = VectorXd(NZ_RADAR); // mean predicted measurement
-     MatrixXd S = MatrixXd(NZ_RADAR, NZ_RADAR); // measurement covariance matrix
-
-     // PRIVATE FUNCTIONS
-     MatrixXd compute_sigma_z(const MatrixXd sigma_x);
-     MatrixXd compute_z(const MatrixXd sigma_z);
-     MatrixXd compute_S(const MatrixXd sigma_z, const MatrixXd predicted_z);
+     VectorXd w = VectorXd(NSIGMA);
+     MatrixXd R = MatrixXd(NZ_RADAR, NZ_RADAR);
+     VectorXd z = VectorXd(NZ_RADAR);
+     MatrixXd S = MatrixXd(NZ_RADAR, NZ_RADAR);
+     MatrixXd sigma_z = MatrixXd(NZ_RADAR, NSIGMA);
 
   public:
     RadarPredictor(const VectorXd W);
