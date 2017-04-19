@@ -32,6 +32,7 @@ class RadarPredictor{
   public:
     RadarPredictor(const VectorXd W);
     void process(const MatrixXd sigma_x);
+    MatrixXd get_sigma() const;
     MatrixXd getS() const;
     VectorXd getz() const;
 };
