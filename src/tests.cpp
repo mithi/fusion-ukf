@@ -83,3 +83,47 @@ bool test_predict_sigma_x(){
   bool r =  (expected_predicted_sigma_x - predicted_sigma_x).norm() < SMALL_POSITIVE_VALUE;
   return r;
 }
+
+bool test_predict_x_P(){
+
+  double SMALL_POSITIVE_VALUE = 1.e-5;
+  VectorXd WEIGHTS = VectorXd(NSIGMA);
+  WEIGHTS << w0, w, w, w, w, w, w, w, w, w, w, w, w, w, w;
+  StatePredictor statePredictor(WEIGHTS);
+
+  MatrixXd predicted_sigma_x = MatrixXd(NX, NSIGMA);
+  predicted_sigma_x <<
+       5.9374,  6.0640,   5.925,  5.9436,  5.9266,  5.9374,  5.9389,  5.9374,  5.8106,  5.9457,  5.9310,  5.9465,  5.9374,  5.9359,  5.93744,
+         1.48,  1.4436,   1.660,  1.4934,  1.5036,    1.48,  1.4868,    1.48,  1.5271,  1.3104,  1.4787,  1.4674,    1.48,  1.4851,    1.486,
+        2.204,  2.2841,  2.2455,  2.2958,   2.204,   2.204,  2.2395,   2.204,  2.1256,  2.1642,  2.1139,   2.204,   2.204,  2.1702,   2.2049,
+       0.5367, 0.47338, 0.67809, 0.55455, 0.64364, 0.54337,  0.5367, 0.53851, 0.60017, 0.39546, 0.51900, 0.42991, 0.530188,  0.5367, 0.535048,
+        0.352, 0.29997, 0.46212, 0.37633,  0.4841, 0.41872,   0.352, 0.38744, 0.40562, 0.24347, 0.32926,  0.2214, 0.28687,   0.352, 0.318159;
+
+  VectorXd expected_x = VectorXd(NX);
+  expected_x << 5.93637, 1.49035, 2.20528, 0.536853, 0.353577;
+
+  MatrixXd expected_P = MatrixXd(NX, NX);
+  expected_P <<
+    0.00543425, -0.0024053,  0.00341576, -0.00348196, -0.00299378,
+   -0.0024053,   0.010845,   0.0014923,   0.00980182,  0.00791091,
+    0.00341576,  0.0014923,  0.00580129,  0.000778632, 0.000792973,
+   -0.00348196,  0.00980182, 0.000778632, 0.0119238,   0.0112491,
+   -0.00299378,  0.00791091, 0.000792973, 0.0112491, 0.0126972;
+
+  VectorXd x = statePredictor.predict_x(predicted_sigma_x);
+  MatrixXd P = statePredictor.predict_P(predicted_sigma_x, x);
+
+  //cout << "x" << endl;
+  //cout << x << endl;
+  //cout << "expected_x" << endl;
+  //cout << expected_x << endl;
+  //cout << "P" << endl;
+  //cout << P << endl;
+  //cout << "expected_P" << endl;
+  //cout << expected_P << endl;
+
+  bool a =  (expected_x - x).norm() < SMALL_POSITIVE_VALUE;
+  bool b =  (expected_P - P).norm() < SMALL_POSITIVE_VALUE;
+
+  return (a && b);
+}
