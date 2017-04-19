@@ -14,6 +14,7 @@ bool test_compute_augmented_sigma();
 bool test_predict_sigma_x();
 bool test_predict_x_P();
 bool radar_predictor_process_test();
+void all_tests();
 
 
 #endif /* TESTS_H_ */
