@@ -29,6 +29,13 @@ class StatePredictor{
     MatrixXd sigma = MatrixXd(NX, NSIGMA); //predicted sigma points
     VectorXd x = VectorXd(NX); // predicted state vector
     MatrixXd P = MatrixXd(NX, NX); // predicted state covariance matrix
+    
+  public:
+    StatePredictor(const VectorXd W);
+    void process(VectorXd current_x, MatrixXd current_P, double dt);
+    MatrixXd get_sigma() const;
+    VectorXd getx() const;
+    MatrixXd getP() const;
 
     //PRIVATE FUNCTIONS
     MatrixXd compute_augmented_sigma(const VectorXd current_x, const MatrixXd current_P);
@@ -36,12 +43,6 @@ class StatePredictor{
     VectorXd predict_x(const MatrixXd predicted_sigma);
     MatrixXd predict_P(const MatrixXd predicted_sigma, const VectorXd predicted_x);
 
-  public:
-    StatePredictor(const VectorXd W);
-    void process(VectorXd current_x, MatrixXd current_P, double dt);
-    MatrixXd get_sigma() const;
-    VectorXd getx() const;
-    MatrixXd getP() const;
 
 };
 
