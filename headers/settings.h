@@ -8,8 +8,8 @@ const int NAUGMENTED = NX + 2; // number of states plus two noise values
 const int LAMBDA = 3 - NAUGMENTED; // tuned parameter
 const int NSIGMA = NAUGMENTED * 2 + 1; // number of sigma points
 const double SCALE = sqrt(LAMBDA + NAUGMENTED); // used to create augmented sigma points
-const double w = 0.5 / (LAMBDA + double(NAUGMENTED));
-const double w0 = LAMBDA / (LAMBDA + double(NAUGMENTED));
+const double W = 0.5 / (LAMBDA + double(NAUGMENTED));
+const double W0 = LAMBDA / (LAMBDA + double(NAUGMENTED));
 
 //process noise standard deviations
 const double STD_SPEED_NOISE = 0.2; // longitudinal acceleration in m/s^2
