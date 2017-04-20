@@ -9,14 +9,13 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 /******************************
- StatePredictor is a class responsible for
- calculating the predicted sigma,
+ StatePredictor is a class responsible for calculating the predicted sigma,
  predicted state vector x, and predicted state covariance matrix P
  based the current state vector x, current state covariance matrix P
  and time passed dt
 
- After calling the process() giving the current_x, current_P and dt
- please call getP(), getx() and get_predicted_sigma()
+ After calling the process(),
+ please call getP(), getx() and get_sigma()
  to get the corresponding calculated values
 *******************************/
 
