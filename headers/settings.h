@@ -1,11 +1,8 @@
 #ifndef SETTINGS_H_
 #define SETTINGS_H_
 
-#include "../src/Eigen/Dense"
-using Eigen::MatrixXd;
-using Eigen::VectorXd;
-
-const int NZ_RADAR  = 3; // number of measurements
+const int NZ_RADAR = 3; // number of measurements
+const int NZ_LIDAR = 2;
 const int NX = 5; // number of states
 const int NAUGMENTED = NX + 2; // number of states plus two noise values
 const int LAMBDA = 3 - NAUGMENTED; // tuned parameter
@@ -27,9 +24,5 @@ const double STD_RHODOT = 0.1; // meters / second
 const double VAR_RHO = STD_RHO * STD_RHO;
 const double VAR_PHI = STD_PHI * STD_PHI;
 const double VAR_RHODOT = STD_RHODOT * STD_RHODOT;
-
-
-
-
 
 #endif /* SETTINGS_H_ */
