@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include "Eigen/Dense"
 #include "settings.h"
-#include "radarpredictor.h"
-#include "statepredictor.h"
 #include "tests.h"
 
 using namespace std;
