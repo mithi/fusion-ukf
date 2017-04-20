@@ -8,9 +8,7 @@
 bool test_compute_augmented_sigma(){
 
   double SMALL_POSITIVE_VALUE = 1.e-05;
-  VectorXd WEIGHTS = VectorXd(NSIGMA);
-  WEIGHTS << w0, w, w, w, w, w, w, w, w, w, w, w, w, w, w;
-  StatePredictor statePredictor(WEIGHTS);
+  StatePredictor statePredictor;
 
   VectorXd x = VectorXd(NX);
   x << 5.7441,
@@ -51,9 +49,7 @@ bool test_compute_augmented_sigma(){
 bool test_predict_sigma_x(){
 
   double SMALL_POSITIVE_VALUE = 1.e-04;
-  VectorXd WEIGHTS = VectorXd(NSIGMA);
-  WEIGHTS << w0, w, w, w, w, w, w, w, w, w, w, w, w, w, w;
-  StatePredictor statePredictor(WEIGHTS);
+  StatePredictor statePredictor;
 
   MatrixXd augmented_sigma_x = MatrixXd(NAUGMENTED, NSIGMA);
   augmented_sigma_x <<
@@ -87,9 +83,7 @@ bool test_predict_sigma_x(){
 bool test_predict_x_P(){
 
   double SMALL_POSITIVE_VALUE = 1.e-5;
-  VectorXd WEIGHTS = VectorXd(NSIGMA);
-  WEIGHTS << w0, w, w, w, w, w, w, w, w, w, w, w, w, w, w;
-  StatePredictor statePredictor(WEIGHTS);
+  StatePredictor statePredictor;
 
   MatrixXd predicted_sigma_x = MatrixXd(NX, NSIGMA);
   predicted_sigma_x <<
@@ -135,9 +129,7 @@ bool test_predict_x_P(){
 bool radar_predictor_process_test(){
 
   double SMALL_POSITIVE_VALUE = 1.e-4;
-  VectorXd WEIGHTS = VectorXd(NSIGMA);
-  WEIGHTS << w0, w, w, w, w, w, w, w, w, w, w, w, w, w, w;
-  RadarPredictor radarPredictor(WEIGHTS);
+  RadarPredictor radarPredictor;
 
   MatrixXd sigma_x = MatrixXd(NX, NSIGMA);
   sigma_x <<
@@ -198,9 +190,7 @@ bool radar_predictor_process_test(){
 bool state_updater_test(){
 
   double SMALL_POSITIVE_VALUE = 1.e-4;
-  VectorXd WEIGHTS = VectorXd(NSIGMA);
-  WEIGHTS << w0, w, w, w, w, w, w, w, w, w, w, w, w, w, w;
-  StateUpdater stateUpdater(WEIGHTS);
+  StateUpdater stateUpdater;
 
   //create example matrix with predicted sigma points
   MatrixXd Xsig_pred = MatrixXd(NX, NSIGMA);
