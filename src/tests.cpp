@@ -283,6 +283,67 @@ bool state_updater_test(){
   return (a && b);
 }
 
+/*******************************************
+ * MEASUREMENT PREDICTOR TESTS
+ *******************************************/
+
+bool measurement_predictor_process_test(){
+
+  double SMALL_POSITIVE_VALUE = 1.e-4;
+  MeasurementPredictor measurementPredictor;
+
+  MatrixXd sigma_x = MatrixXd(NX, NSIGMA);
+  sigma_x <<
+         5.9374,  6.0640,   5.925,  5.9436,  5.9266,  5.9374,  5.9389,  5.9374,  5.8106,  5.9457,  5.9310,  5.9465,  5.9374,  5.9359,  5.93744,
+           1.48,  1.4436,   1.660,  1.4934,  1.5036,    1.48,  1.4868,    1.48,  1.5271,  1.3104,  1.4787,  1.4674,    1.48,  1.4851,    1.486,
+          2.204,  2.2841,  2.2455,  2.2958,   2.204,   2.204,  2.2395,   2.204,  2.1256,  2.1642,  2.1139,   2.204,   2.204,  2.1702,   2.2049,
+         0.5367, 0.47338, 0.67809, 0.55455, 0.64364, 0.54337,  0.5367, 0.53851, 0.60017, 0.39546, 0.51900, 0.42991, 0.530188,  0.5367, 0.535048,
+          0.352, 0.29997, 0.46212, 0.37633,  0.4841, 0.41872,   0.352, 0.38744, 0.40562, 0.24347, 0.32926,  0.2214, 0.28687,   0.352, 0.318159;
+
+  measurementPredictor.process(sigma_x, DataPointType::RADAR);
+  VectorXd z = measurementPredictor.getz();
+  MatrixXd S = measurementPredictor.getS();
+  MatrixXd sigma_z = measurementPredictor.get_sigma();
+
+
+  VectorXd expected_z = VectorXd(NZ_RADAR);
+  expected_z << 6.12155, 0.245993, 2.10313;
+
+  MatrixXd expected_S = MatrixXd(NZ_RADAR, NZ_RADAR);
+  expected_S <<
+     0.0946171,   -0.000139448,    0.00407016,
+    -0.000139448,  0.000617548,   -0.000770652,
+     0.00407016,  -0.000770652,    0.0180917;
+
+  MatrixXd expected_sigma_z = MatrixXd(NZ_RADAR, NSIGMA);
+  expected_sigma_z <<
+      6.11908,  6.23346,  6.15315,  6.12835,  6.11436,  6.11908,  6.12218,  6.11908,  6.00792,  6.08839,  6.11255,  6.12488,  6.11908,  6.11886,  6.12057,
+     0.244289,  0.23371, 0.273165, 0.246166, 0.248461, 0.244289, 0.245307, 0.244289, 0.257001, 0.216927, 0.244336, 0.241934, 0.244289, 0.245157, 0.245239,
+      2.11044,  2.21881,  2.06391,   2.1875,  2.03413,  2.10616,  2.14509,  2.10929,  2.00166,   2.1298,  2.03466,  2.16518,  2.11454,  2.07862,  2.11295;
+
+  /*
+  cout << "z" << endl;
+  cout << z << endl;
+  cout << "expected_z" << endl;
+  cout << expected_z << endl;
+
+  cout << "S" << endl;
+  cout << S << endl;
+  cout << "expected_S" << endl;
+  cout << expected_S << endl;
+
+  cout << "sigma_z" << endl;
+  cout << sigma_z << endl;
+  cout << "expected_sigma_z" << endl;
+  cout << expected_sigma_z << endl;
+  */
+  bool a =  (expected_z - z).norm() < SMALL_POSITIVE_VALUE;
+  bool b =  (expected_S - S).norm() < SMALL_POSITIVE_VALUE;
+  bool c =  (expected_sigma_z - sigma_z).norm() < SMALL_POSITIVE_VALUE;
+
+  return (a && b && c);
+}
+
 void all_tests(){
   cout << "ALL TESTS SHOULD RETURN 1" << endl;
   cout << "- StatePredictor Tests" << endl;
@@ -291,6 +352,8 @@ void all_tests(){
   cout << "--- predict_x_P(): "<< test_predict_x_P() << endl;
   cout << "- RadarPredictor Tests" << endl;
   cout << "--- radar_predictor_process_test(): " << radar_predictor_process_test() << endl;
+  cout << "- MeasurementPredictor Tests" << endl;
+  cout << "--- measurement_predictor_process_test(): " << measurement_predictor_process_test() << endl;
   cout << "- StateUpdater Tests" << endl;
   cout << "--- state_updater_test(): " << state_updater_test() << endl;
 }
