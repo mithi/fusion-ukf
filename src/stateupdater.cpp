@@ -32,7 +32,7 @@ void StateUpdater::update(const VectorXd z, const MatrixXd S, const MatrixXd Tc,
   MatrixXd K = Tc * S.inverse();
 
   VectorXd dz = z - predicted_z;
-  if (dz.size() == NZ_RADAR) dz(1) = normalize(dz(1));
+  if (dz.size() == NZ_RADAR) dz(1) = normalize(dz(1)); // yaw/phi in radians
 
   this->x = predicted_x + K * dz;
   this->P = predicted_P - K * S * K.transpose();
