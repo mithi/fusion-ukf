@@ -2,7 +2,7 @@
 #define SETTINGS_H_
 
 enum class DataPointType{
-  LIDAR, RADAR, STATE
+  LIDAR, RADAR, STATE, TRUTH
 };
 
 const int NZ_RADAR = 3; // number of measurements
