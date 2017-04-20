@@ -8,6 +8,7 @@ include_directories(headers)
 set(SOURCES src/main.cpp
             src/tools.cpp
             src/radarpredictor.cpp
+            src/measurementpredictor.cpp
             src/statepredictor.cpp
             src/stateupdater.cpp
             src/tests.cpp)
