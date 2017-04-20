@@ -272,7 +272,7 @@ bool state_updater_test(){
     -0.000983935   0.00137287  -0.00547673
   */
 
-  stateUpdater.process(z, S, P, x, z_pred, Xsig_pred, Zsig);
+  stateUpdater.process(x, z_pred, z, S, P, Xsig_pred, Zsig);
 
   VectorXd new_x = stateUpdater.getx();
   MatrixXd new_P = stateUpdater.getP();

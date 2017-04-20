@@ -32,11 +32,11 @@ class StateUpdater{
 
   public:
     StateUpdater();
-    void process(const VectorXd z,
+    void process(const VectorXd predicted_x,
+                 const VectorXd predicted_z,
+                 const VectorXd z,
                  const MatrixXd S,
                  const MatrixXd predicted_P,
-                 const VectorXd predicted_x,
-                 const VectorXd predicted_z,
                  const MatrixXd sigma_x,
                  const MatrixXd sigma_z);
     VectorXd getx() const;
