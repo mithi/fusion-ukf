@@ -4,9 +4,7 @@
 #include "../src/Eigen/Dense"
 #include "settings.h"
 #include "tools.h"
-#include <stdlib.h>
 
-using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
