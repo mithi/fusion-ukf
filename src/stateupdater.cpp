@@ -18,7 +18,7 @@ MatrixXd StateUpdater::compute_Tc(const VectorXd predicted_x,
     dx(3) = normalize(dx(3));
 
     dz = sigma_z.col(c) - predicted_z;
-    if (NZ == NZ_RADAR) dz(1) = normalize(dz(1));
+    if (NZ == NZ_RADAR) dz(1) = normalize(dz(1)); // phi in radians
 
     Tc += WEIGHTS[c] * dx * dz.transpose();
   }
