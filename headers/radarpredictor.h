@@ -20,11 +20,11 @@ using Eigen::VectorXd;
 
 class RadarPredictor{
 
-   private:
-     MatrixXd R = MatrixXd(NZ_RADAR, NZ_RADAR);
-     VectorXd z = VectorXd(NZ_RADAR);
-     MatrixXd S = MatrixXd(NZ_RADAR, NZ_RADAR);
-     MatrixXd sigma_z = MatrixXd(NZ_RADAR, NSIGMA);
+  private:
+    MatrixXd R = MatrixXd(NZ_RADAR, NZ_RADAR);
+    VectorXd z = VectorXd(NZ_RADAR);
+    MatrixXd S = MatrixXd(NZ_RADAR, NZ_RADAR);
+    MatrixXd sigma_z = MatrixXd(NZ_RADAR, NSIGMA);
 
   public:
     RadarPredictor();
@@ -37,7 +37,6 @@ class RadarPredictor{
     MatrixXd compute_sigma_z(const MatrixXd sigma_x);
     MatrixXd compute_z(const MatrixXd sigma_z);
     MatrixXd compute_S(const MatrixXd sigma_z, const MatrixXd predicted_z);
-
 };
 
 #endif //RADARPREDICTOR_H_
