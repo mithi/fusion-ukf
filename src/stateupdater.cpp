@@ -36,7 +36,6 @@ void StateUpdater::update(const VectorXd z, const MatrixXd S, const MatrixXd Tc,
 
   this->x = predicted_x + K * dz;
   this->P = predicted_P - K * S * K.transpose();
-
 }
 
 void StateUpdater::process(const VectorXd z, const MatrixXd S, const MatrixXd predicted_P,
@@ -51,6 +50,5 @@ VectorXd StateUpdater::getx() const{
 }
 
 MatrixXd StateUpdater::getP() const{
-
   return this->P;
 }
