@@ -5,11 +5,7 @@ const int NZ_RADAR = 3; // number of measurements
 const int NZ_LIDAR = 2;
 const int NX = 5; // number of states
 const int NAUGMENTED = NX + 2; // number of states plus two noise values
-const int LAMBDA = 3 - NAUGMENTED; // tuned parameter
 const int NSIGMA = NAUGMENTED * 2 + 1; // number of sigma points
-const double SCALE = sqrt(LAMBDA + NAUGMENTED); // used to create augmented sigma points
-const double W = 0.5 / (LAMBDA + double(NAUGMENTED));
-const double W0 = LAMBDA / (LAMBDA + double(NAUGMENTED));
 
 //process noise standard deviations
 const double STD_SPEED_NOISE = 0.2; // longitudinal acceleration in m/s^2
@@ -25,6 +21,10 @@ const double VAR_RHO = STD_RHO * STD_RHO;
 const double VAR_PHI = STD_PHI * STD_PHI;
 const double VAR_RHODOT = STD_RHODOT * STD_RHODOT;
 
+const int LAMBDA = 3 - NAUGMENTED; // tuned parameter
+const double SCALE = sqrt(LAMBDA + NAUGMENTED); // used to create augmented sigma points
+const double W = 0.5 / (LAMBDA + double(NAUGMENTED));
+const double W0 = LAMBDA / (LAMBDA + double(NAUGMENTED));
 const double WEIGHTS[NSIGMA] = {W0, W, W, W, W, W, W, W, W, W, W, W, W, W, W};
 
 
