@@ -6,10 +6,12 @@ double normalize(const double a){
 
   while (b > M_PI){
     b -= 2. * M_PI;
+    cout << M_PI << "b1:" <<  b << endl;
   }
 
   while (b < -M_PI){
     b += 2. * M_PI;
+    cout << "b2:" << b << endl;
   }
 
   return b;
