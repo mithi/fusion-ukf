@@ -21,14 +21,13 @@ using Eigen::VectorXd;
 class RadarPredictor{
 
    private:
-     VectorXd w = VectorXd(NSIGMA);
      MatrixXd R = MatrixXd(NZ_RADAR, NZ_RADAR);
      VectorXd z = VectorXd(NZ_RADAR);
      MatrixXd S = MatrixXd(NZ_RADAR, NZ_RADAR);
      MatrixXd sigma_z = MatrixXd(NZ_RADAR, NSIGMA);
 
   public:
-    RadarPredictor(const VectorXd W);
+    RadarPredictor();
     void process(const MatrixXd sigma_x);
     MatrixXd get_sigma() const;
     MatrixXd getS() const;
