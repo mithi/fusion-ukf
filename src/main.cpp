@@ -16,6 +16,9 @@ using Eigen::VectorXd;
 
 
 int main(){
+  cout << "hello!" << endl;
   all_tests();
+  cout << "what!" << endl;
+
   return 0;
 }
