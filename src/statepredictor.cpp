@@ -1,8 +1,6 @@
 #include "statepredictor.h"
 
-StatePredictor::StatePredictor(const VectorXd W){
-  this->w = W;
-}
+StatePredictor::StatePredictor(){}
 
 MatrixXd StatePredictor::compute_augmented_sigma(
   const VectorXd current_x, const MatrixXd current_P){
@@ -106,7 +104,7 @@ VectorXd StatePredictor::predict_x(const MatrixXd predicted_sigma){
   predicted_x.fill(0.0);
 
   for (int c = 0; c < NSIGMA; c++){
-    predicted_x += this->w(c) * predicted_sigma.col(c);
+    predicted_x += WEIGHTS[c] * predicted_sigma.col(c);
   }
 
   return predicted_x;
@@ -124,7 +122,7 @@ MatrixXd StatePredictor::predict_P(const MatrixXd predicted_sigma, const VectorX
 
     dx = predicted_sigma.col(c) - predicted_x;
     dx(3) = normalize(dx(3));
-    predicted_P += this->w(c) * dx * dx.transpose();
+    predicted_P += WEIGHTS[c] * dx * dx.transpose();
   }
 
   return predicted_P;

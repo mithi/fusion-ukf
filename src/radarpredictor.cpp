@@ -1,18 +1,16 @@
 #include "radarpredictor.h"
 
-RadarPredictor::RadarPredictor(const VectorXd W){
+RadarPredictor::RadarPredictor(){
 
   this->R << VAR_RHO, 0, 0,
              0, VAR_PHI, 0,
              0, 0, VAR_RHODOT;
-
-  this->w = W;
 }
 
 MatrixXd RadarPredictor::compute_sigma_z(const MatrixXd sigma_x){
 
   double px, py, v, yaw, vx, vy, rho, phi, rhodot;
-  
+
   MatrixXd sigma = MatrixXd(NZ_RADAR, NSIGMA);
   sigma.fill(0.0);
 
@@ -44,7 +42,7 @@ MatrixXd RadarPredictor::compute_z(const MatrixXd sigma){
   z.fill(0.0);
 
   for(int c = 0; c < NSIGMA; c++){
-    z += this->w(c) * sigma.col(c);
+    z += WEIGHTS[c] * sigma.col(c);
   }
 
   return z;
@@ -61,7 +59,7 @@ MatrixXd RadarPredictor::compute_S(const MatrixXd sigma, const MatrixXd z){
     dz = sigma.col(c) - z;
     dz(1) = normalize(dz(1));
 
-    S += this->w(c) * dz * dz.transpose();
+    S += WEIGHTS[c] * dz * dz.transpose();
   }
 
   S += this->R;

@@ -22,13 +22,12 @@ using Eigen::VectorXd;
 class StatePredictor{
 
   private:
-    VectorXd w = VectorXd(NSIGMA);
     MatrixXd sigma = MatrixXd(NX, NSIGMA); //predicted sigma points
     VectorXd x = VectorXd(NX); // predicted state vector
     MatrixXd P = MatrixXd(NX, NX); // predicted state covariance matrix
 
   public:
-    StatePredictor(const VectorXd W);
+    StatePredictor();
     void process(VectorXd current_x, MatrixXd current_P, double dt);
     MatrixXd get_sigma() const;
     VectorXd getx() const;

@@ -25,4 +25,7 @@ const double VAR_RHO = STD_RHO * STD_RHO;
 const double VAR_PHI = STD_PHI * STD_PHI;
 const double VAR_RHODOT = STD_RHODOT * STD_RHODOT;
 
+const double WEIGHTS[NSIGMA] = {W0, W, W, W, W, W, W, W, W, W, W, W, W, W, W};
+
+
 #endif /* SETTINGS_H_ */

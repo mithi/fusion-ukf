@@ -27,12 +27,11 @@ using Eigen::VectorXd;
 class StateUpdater{
 
   private:
-    VectorXd w = VectorXd(NSIGMA);
     MatrixXd x;
     MatrixXd P;
 
   public:
-    StateUpdater(const VectorXd W);
+    StateUpdater();
     void process(const VectorXd z,
                  const MatrixXd S,
                  const MatrixXd predicted_P,

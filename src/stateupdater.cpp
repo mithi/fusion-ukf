@@ -1,8 +1,6 @@
 #include "stateupdater.h"
 
-StateUpdater::StateUpdater(const VectorXd W){
-  this->w = W;
-}
+StateUpdater::StateUpdater(){}
 
 MatrixXd StateUpdater::compute_Tc(const VectorXd predicted_x,
   const VectorXd predicted_z, const MatrixXd sigma_x, const MatrixXd sigma_z){
@@ -22,7 +20,7 @@ MatrixXd StateUpdater::compute_Tc(const VectorXd predicted_x,
     dz = sigma_z.col(c) - predicted_z;
     if (NZ == NZ_RADAR) dz(1) = normalize(dz(1));
 
-    Tc += this->w(c) * dx * dz.transpose();
+    Tc += WEIGHTS[c] * dx * dz.transpose();
   }
 
   return Tc;
