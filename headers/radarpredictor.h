@@ -37,6 +37,7 @@ class RadarPredictor{
     MatrixXd compute_sigma_z(const MatrixXd sigma_x);
     MatrixXd compute_z(const MatrixXd sigma_z);
     MatrixXd compute_S(const MatrixXd sigma_z, const MatrixXd predicted_z);
+
 };
 
 #endif //RADARPREDICTOR_H_
