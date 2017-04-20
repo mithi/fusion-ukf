@@ -119,10 +119,13 @@ MatrixXd StatePredictor::predict_P(const MatrixXd predicted_sigma, const VectorX
   VectorXd dx = VectorXd(NX);
 
   for (int c = 0; c < NSIGMA; c++){
-
+    cout << "c" << c << endl;
     dx = predicted_sigma.col(c) - predicted_x;
+    cout << "dx" << dx << endl;
     dx(3) = normalize(dx(3));
+    cout << "normalized" << dx << endl;
     predicted_P += WEIGHTS[c] * dx * dx.transpose();
+    cout << predicted_P << endl;
   }
 
   return predicted_P;
@@ -134,6 +137,7 @@ void StatePredictor::process(VectorXd current_x, MatrixXd current_P, double dt){
   this->sigma = predict_sigma(augmented_sigma, dt);
   this->x = predict_x(this->sigma);
   this->P = predict_P(this->sigma, this->x);
+  cout << "predicted P" << this->P << endl;
 }
 
 MatrixXd StatePredictor::getP() const{
