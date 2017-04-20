@@ -10,7 +10,7 @@ using Eigen::VectorXd;
 
 /******************************
  StateUpdater is a class responsible for updating the
- state vector x, and state covariance matrix P
+ state vector x, and state covariance matrix P (and the current nis)
  based on the following:
  - the current incoming measurement vector z
  - the measurement covariance matrix S
@@ -21,7 +21,8 @@ using Eigen::VectorXd;
  - the predicted sigma point in measurement space sigma_z
 
  After calling the process()
- please call getx() and getP() to get the corresponding calculated values
+ please call getx() and getP() (and get_nis()) 
+ to get the corresponding calculated values
 *******************************/
 
 class StateUpdater{
@@ -29,6 +30,7 @@ class StateUpdater{
   private:
     MatrixXd x;
     MatrixXd P;
+    double nis;
 
   public:
     StateUpdater();
@@ -41,6 +43,7 @@ class StateUpdater{
                  const MatrixXd sigma_z);
     VectorXd getx() const;
     MatrixXd getP() const;
+    double get_nis() const;
 
     // PRIVATE FUNCTIONS
     MatrixXd compute_Tc(const VectorXd predicted_x,

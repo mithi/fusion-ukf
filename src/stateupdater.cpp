@@ -54,3 +54,7 @@ VectorXd StateUpdater::getx() const{
 MatrixXd StateUpdater::getP() const{
   return this->P;
 }
+
+double StateUpdater::get_nis() const{
+  return this->nis;
+}
