@@ -37,5 +37,4 @@ const double W = 0.5 / (LAMBDA + double(NAUGMENTED));
 const double W0 = LAMBDA / (LAMBDA + double(NAUGMENTED));
 const double WEIGHTS[NSIGMA] = {W0, W, W, W, W, W, W, W, W, W, W, W, W, W, W};
 
-
 #endif /* SETTINGS_H_ */
