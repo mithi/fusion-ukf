@@ -4,7 +4,9 @@ MeasurementPredictor::MeasurementPredictor(){}
 
 void MeasurementPredictor::initialize(const DataPointType sensor_type){
 
-  if(sensor_type == DataPointType::RADAR){
+  this->current_type = sensor_type;
+
+  if (this->current_type == DataPointType::RADAR){
 
     this->nz = NZ_RADAR;
     this->R = MatrixXd(this->nz, this->nz);
@@ -12,7 +14,7 @@ void MeasurementPredictor::initialize(const DataPointType sensor_type){
                0, VAR_PHI, 0,
                0, 0, VAR_RHODOT;
 
-  } else { // LIDAR
+  } else if (this->current_type == DataPointType::LIDAR){
 
     this->nz = NZ_LIDAR;
     this->R = MatrixXd(this->nz, this->nz);
@@ -30,7 +32,7 @@ MatrixXd MeasurementPredictor::compute_sigma_z(const MatrixXd sigma_x){
 
   for (int c = 0; c < NSIGMA; c++){
 
-    if (this->nz == NZ_RADAR){
+    if (this->current_type == DataPointType::RADAR){
 
       px = sigma_x(0, c);
       py = sigma_x(1, c);
@@ -48,7 +50,7 @@ MatrixXd MeasurementPredictor::compute_sigma_z(const MatrixXd sigma_x){
       sigma(1, c) = phi;
       sigma(2, c) = rhodot;
 
-    } else { //LIDAR
+    } else if (this->current_type == DataPointType::LIDAR){ //LIDAR
 
       px = sigma_x(0, c);
       py = sigma_x(1, c);
@@ -101,7 +103,7 @@ void MeasurementPredictor::process(const MatrixXd sigma_x, const DataPointType s
 
   // get the mean predicted measurement vector z
   this->z = this->compute_z(this->sigma_z);
-  
+
   // get the measurement covariance matrix S
   this->S = this->compute_S(this->sigma_z, this->z);
 }

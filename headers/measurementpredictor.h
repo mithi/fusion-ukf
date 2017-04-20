@@ -22,6 +22,7 @@ class MeasurementPredictor{
 
   private:
     int nz;
+    DataPointType current_type;
     MatrixXd R;
     VectorXd z;
     MatrixXd S;
