@@ -40,8 +40,9 @@ void StateUpdater::update(const VectorXd z, const MatrixXd S, const MatrixXd Tc,
   this->nis = dz.transpose() * Si * dz;
 }
 
-void StateUpdater::process(const VectorXd z, const MatrixXd S, const MatrixXd predicted_P,
-  const VectorXd predicted_x, const VectorXd predicted_z, const MatrixXd sigma_x, const MatrixXd sigma_z){
+void StateUpdater::process(const VectorXd predicted_x, const VectorXd predicted_z,
+  const VectorXd z, const MatrixXd S, const MatrixXd predicted_P,
+  const MatrixXd sigma_x, const MatrixXd sigma_z){
 
   MatrixXd Tc = this->compute_Tc(predicted_x, predicted_z, sigma_x, sigma_z);
   this->update(z, S, Tc, predicted_z, predicted_x, predicted_P);
