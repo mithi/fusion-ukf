@@ -29,13 +29,15 @@ MatrixXd StateUpdater::compute_Tc(const VectorXd predicted_x,
 void StateUpdater::update(const VectorXd z, const MatrixXd S, const MatrixXd Tc,
   const VectorXd predicted_z, const VectorXd predicted_x, const MatrixXd predicted_P){
 
-  MatrixXd K = Tc * S.inverse();
+  MatrixXd Si = S.inverse();
+  MatrixXd K = Tc * Si;
 
   VectorXd dz = z - predicted_z;
   if (dz.size() == NZ_RADAR) dz(1) = normalize(dz(1)); // yaw/phi in radians
 
   this->x = predicted_x + K * dz;
   this->P = predicted_P - K * S * K.transpose();
+  this->nis = dz.transpose() * Si * dz;
 }
 
 void StateUpdater::process(const VectorXd z, const MatrixXd S, const MatrixXd predicted_P,
