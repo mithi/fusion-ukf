@@ -12,6 +12,7 @@ RadarPredictor::RadarPredictor(const VectorXd W){
 MatrixXd RadarPredictor::compute_sigma_z(const MatrixXd sigma_x){
 
   double px, py, v, yaw, vx, vy, rho, phi, rhodot;
+  
   MatrixXd sigma = MatrixXd(NZ_RADAR, NSIGMA);
   sigma.fill(0.0);
 
