@@ -5,12 +5,13 @@ add_definitions(-std=c++0x)
 
 include_directories(headers)
 
-set(SOURCES src/main.cpp
-            src/tools.cpp
-            src/radarpredictor.cpp
+set(SOURCES src/tools.cpp
+            src/usagecheck.cpp
             src/measurementpredictor.cpp
             src/statepredictor.cpp
             src/stateupdater.cpp
-            src/tests.cpp)
+            src/datapoint.cpp
+            src/fusionukf.cpp
+            src/main.cpp)
 
 add_executable(UnscentedKF ${SOURCES})
