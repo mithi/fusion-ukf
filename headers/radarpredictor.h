@@ -1,12 +1,10 @@
 #ifndef RADARPREDICTOR_H_
 #define RADARPREDICTOR_H_
 
-#include <stdlib.h>
 #include "../src/Eigen/Dense"
 #include "tools.h"
 #include "settings.h"
 
-using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
