@@ -74,6 +74,10 @@ int main(int argc, char* argv[]) {
       sensor_data.set(timestamp, DataPointType::RADAR, radar_vec);
     }
 
+    //const double ZERO = 0.001;
+    //x = (x == 0 ? ZERO : x);
+    //y = (y == 0 ? ZERO : x);
+
     iss >> x;
     iss >> y;
     iss >> vx;

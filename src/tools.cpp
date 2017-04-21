@@ -4,15 +4,15 @@ double normalize(const double a){
 
   double b = a;
 
-  while (b > M_PI){
-    b -= 2. * M_PI;
-    cout << M_PI << "b1:" <<  b << endl;
+  if (b > M_PI){
+    b = fmod(b - M_PI, 2. * M_PI) - M_PI;
   }
 
-  while (b < -M_PI){
-    b += 2. * M_PI;
-    cout << "b2:" << b << endl;
+  if (b < -M_PI){
+    b = fmod(b + M_PI, 2. * M_PI) + M_PI;
   }
+
+  cout << "normalized b: " << b << endl;
 
   return b;
 }
