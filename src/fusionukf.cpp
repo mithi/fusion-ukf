@@ -6,7 +6,9 @@ FusionUKF::FusionUKF(){
 
 void FusionUKF::initialize(const DataPoint data){
   this->x = data.get_state();
+  cout << this->x << endl;
   this->P = MatrixXd::Identity(NX, NX);
+  this->timestamp = data.get_timestamp();
   this->initialized = true;
 }
 
@@ -18,28 +20,50 @@ void FusionUKF::update(const DataPoint data){
   MatrixXd S;
 
   // get the time difference in seconds
-  double dt = (double(data.get_timestamp()) - double(this->timestamp)) / 1000000.0;
+  double dt = (data.get_timestamp() - this->timestamp) / 1.0e6;
 
-  // state prediction
+  // STATE PREDICTION
   // get predicted state and covariance of predicted state, predicted sigma points in state space
   this->statePredictor.process(this->x, this->P, dt);
   this->x = this->statePredictor.getx();
   this->P = this->statePredictor.getP();
   sigma_x = this->statePredictor.get_sigma();
 
-  // measurement prediction
+  cout << "========================================" << endl;
+  cout << "SIGMA X PREDICTED" << endl;
+  cout << sigma_x << endl;
+  cout << "========================================" << endl;
+
+
+  // MEASUREMENT PREDICTION
   // get predicted measurement, covariance of predicted measurement, predicted sigma points in measurement space
   this->measurementPredictor.process(sigma_x, data.get_type());
   predicted_z = this->measurementPredictor.getz();
   S = this->measurementPredictor.getS();
   sigma_z = this->measurementPredictor.get_sigma();
 
-  // state update
+  if (data.get_type() == DataPointType::RADAR) {
+    cout << "========================================" << endl;
+    cout << "SIGMA Z PREDICTED" << endl;
+    cout << sigma_z << endl;
+    cout << "PREDICTED Z" << endl;
+    cout << predicted_z << endl;
+    cout << "========================================" << endl;
+  }
+
+  // STATE UPDATE
   // updated the state and covariance of state... also get the nis
   this->stateUpdater.process(this->x, predicted_z, data.get(), S, P, sigma_x, sigma_z);
   this->x = this->stateUpdater.getx();
   this->P  = this->stateUpdater.getP();
   this->nis = this->stateUpdater.get_nis();
+
+  cout << "========================================" << endl;
+  cout << "UPDATED X" << endl;
+  cout << this->x << endl;
+  cout << "UPDATED P" << endl;
+  cout << this->P << endl;
+  cout << "========================================" << endl;
 
   // update timestamp
   this->timestamp = data.get_timestamp();

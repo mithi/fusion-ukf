@@ -35,9 +35,20 @@ void StateUpdater::update(const VectorXd z, const MatrixXd S, const MatrixXd Tc,
   VectorXd dz = z - predicted_z;
   if (dz.size() == NZ_RADAR) dz(1) = normalize(dz(1)); // yaw/phi in radians
 
+  cout << "Tc" << Tc << endl;
+  cout << "S" << S << endl;
+  cout << "Si" << Si << endl;
+  cout << "K" << K << endl;
+  cout << "dz" << dz << endl;
+  cout << "x" << predicted_x << endl;
+  cout << "P" << predicted_P << endl;
+
   this->x = predicted_x + K * dz;
   this->P = predicted_P - K * S * K.transpose();
   this->nis = dz.transpose() * Si * dz;
+
+
+
 }
 
 void StateUpdater::process(const VectorXd predicted_x, const VectorXd predicted_z,
