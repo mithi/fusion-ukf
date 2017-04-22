@@ -25,6 +25,7 @@ void MeasurementPredictor::initialize(const DataPointType sensor_type){
 
 MatrixXd MeasurementPredictor::compute_sigma_z(const MatrixXd sigma_x){
 
+  const double THRESH = 1e-4;
   double px, py, v, yaw, vx, vy, rho, phi, rhodot;
 
   MatrixXd sigma = MatrixXd(this->nz, NSIGMA);
@@ -44,19 +45,16 @@ MatrixXd MeasurementPredictor::compute_sigma_z(const MatrixXd sigma_x){
 
       rho = sqrt(px * px + py * py);
       phi = atan2(py, px);
-      rhodot = (px * vx + py * vy) / rho;
+      rhodot = (rho > THRESH) ? ((px * vx + py * vy) / rho) : 0.0; // avoid division by zero
 
       sigma(0, c) = rho;
       sigma(1, c) = phi;
       sigma(2, c) = rhodot;
 
-    } else if (this->current_type == DataPointType::LIDAR){ //LIDAR
+    } else if (this->current_type == DataPointType::LIDAR){
 
-      px = sigma_x(0, c);
-      py = sigma_x(1, c);
-
-      sigma(0, c) = px;
-      sigma(1, c) = py;
+      sigma(0, c) = sigma_x(0, c); //px
+      sigma(1, c) = sigma_x(1, c); //py
     }
   }
 
@@ -67,6 +65,9 @@ MatrixXd MeasurementPredictor::compute_z(const MatrixXd sigma){
 
   VectorXd z = VectorXd(this->nz);
   z.fill(0.0);
+
+  for (int c = 0; c < NSIGMA; c++)
+    cout << "WEIGHTS:" << WEIGHTS[c] << endl;
 
   for(int c = 0; c < NSIGMA; c++){
     z += WEIGHTS[c] * sigma.col(c);
