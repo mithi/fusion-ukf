@@ -26,12 +26,24 @@ MatrixXd StatePredictor::compute_augmented_sigma(
     augmented_sigma.col(i + NAUGMENTED)  = augmented_x - SCALE * L.col(c);
   }
 
+  cout << "augmented P" << endl;
+  cout << augmented_P << endl;
+  cout << "augmented X" << endl;
+  cout << augmented_x << endl;
+  cout << "P squareroot" << endl;
+  cout << L << endl;
+
+  cout << "========================================" << endl;
+  cout << "SIGMA X AUGMENTED" << endl;
+  cout << augmented_sigma << endl;
+  cout << "========================================" << endl;
+
   return augmented_sigma;
 }
 
 MatrixXd StatePredictor::predict_sigma(const MatrixXd augmented_sigma, double dt){
 
-  double THRESH = 0.001;
+  double THRESH = 1e-4; //0.001
   double px, py, speed, yaw, yawrate, speed_noise, yawrate_noise;
   double p_px, p_py, p_speed, p_yaw, p_yawrate, p_speed_noise, p_yawrate_noise;
 
@@ -86,7 +98,7 @@ MatrixXd StatePredictor::predict_sigma(const MatrixXd augmented_sigma, double dt
     p_yaw += y_noise;
     p_yawrate += yawrate_noise * dt;
 
-    p_yaw += normalize(p_yaw); //
+    //p_yaw = normalize(p_yaw);
 
    /*************************************
     * Write the prediction to the appropriate column
@@ -109,7 +121,7 @@ VectorXd StatePredictor::predict_x(const MatrixXd predicted_sigma){
 
   for (int c = 0; c < NSIGMA; c++){
     predicted_x += WEIGHTS[c] * predicted_sigma.col(c);
-    //predicted_x(3) = normalize(predicted_x(3)); 
+    //predicted_x(3) = normalize(predicted_x(3));
   }
 
   return predicted_x;
@@ -129,7 +141,6 @@ MatrixXd StatePredictor::predict_P(const MatrixXd predicted_sigma, const VectorX
     dx(3) = normalize(dx(3));
 
     predicted_P += WEIGHTS[c] * dx * dx.transpose();
-    cout << "predict P! in for loop!" << endl << predicted_P << endl;
   }
 
   return predicted_P;
@@ -141,7 +152,6 @@ void StatePredictor::process(VectorXd current_x, MatrixXd current_P, double dt){
   this->sigma = predict_sigma(augmented_sigma, dt);
   this->x = predict_x(this->sigma);
   this->P = predict_P(this->sigma, this->x);
-  cout << "predicted P" << this->P << endl;
 }
 
 MatrixXd StatePredictor::getP() const{
