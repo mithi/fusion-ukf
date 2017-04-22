@@ -23,7 +23,7 @@ using Eigen::VectorXd;
  - the predicted sigma point in measurement space sigma_z
 
  After calling the process()
- please call getx() and getP() (and get_nis()) 
+ please call getx() and getP() (and get_nis())
  to get the corresponding calculated values
 *******************************/
 
