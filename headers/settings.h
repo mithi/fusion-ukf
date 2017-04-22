@@ -33,8 +33,8 @@ const double VAR_PY = STD_PY * STD_PX;
 
 const int LAMBDA = 3 - NAUGMENTED; // tuned parameter
 const double SCALE = sqrt(LAMBDA + NAUGMENTED); // used to create augmented sigma points
-const double W = 0.5 / (LAMBDA + double(NAUGMENTED));
-const double W0 = LAMBDA / (LAMBDA + double(NAUGMENTED));
+const double W = 0.5 / (LAMBDA + NAUGMENTED);
+const double W0 = LAMBDA / double(LAMBDA + NAUGMENTED);
 const double WEIGHTS[NSIGMA] = {W0, W, W, W, W, W, W, W, W, W, W, W, W, W, W};
 
 #endif /* SETTINGS_H_ */
