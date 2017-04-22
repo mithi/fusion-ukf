@@ -8,7 +8,7 @@ DataPoint:: DataPoint(const long long timestamp, const DataPointType data_type, 
   this->set(timestamp, data_type, raw);
 }
 
-void DataPoint::set(const long timestamp, const DataPointType data_type, const VectorXd raw){
+void DataPoint::set(const long long timestamp, const DataPointType data_type, const VectorXd raw){
   this->timestamp = timestamp;
   this->data_type = data_type;
   this->raw = raw;
