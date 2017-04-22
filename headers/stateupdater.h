@@ -1,10 +1,12 @@
 #ifndef STATEUPDATER_H_
 #define STATEUPDATER_H_
 
+#include <stdlib.h>
 #include "../src/Eigen/Dense"
 #include "settings.h"
 #include "tools.h"
 
+using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
