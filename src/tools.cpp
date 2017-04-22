@@ -1,7 +1,9 @@
 #include "tools.h"
 
 double normalize(const double a){
+  return (fabs(a) > M_PI) ? remainder(a, 2. * M_PI) : a;
 
+/*
   double b = a;
 
   if (b > M_PI){
@@ -12,9 +14,8 @@ double normalize(const double a){
     b = fmod(b + M_PI, 2. * M_PI) + M_PI;
   }
 
-  cout << "normalized b: " << b << endl;
-
   return b;
+*/
 }
 
 VectorXd calculate_RMSE(const vector<VectorXd> &estimations, const vector<VectorXd> &ground_truths){
