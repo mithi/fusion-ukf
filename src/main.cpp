@@ -116,6 +116,7 @@ int main(int argc, char* argv[]) {
   /*******************************************************************
    * USE DATA AND FUSIONUKF FOR STATE ESTIMATIONS
    *******************************************************************/
+   cout << "Processing all data..." << endl;
 
    FusionUKF fusionUKF;
 
@@ -147,13 +148,13 @@ int main(int argc, char* argv[]) {
     sensor_type = sensor_data.get_type();
     sensor_name = ((sensor_type == DataPointType::RADAR) ? "radar" : "lidar");
     measurement = sensor_data.get_state();
+
     /*******************************************************************
      * PREDICT NEXT STATE USING FUSIONUKF
      *******************************************************************/
     fusionUKF.process(sensor_data);
     prediction = fusionUKF.get();
     nis = fusionUKF.get_nis();
-
 
     /*******************************************************************
      * WRITE ALL INFO IN OUTPUT FILE
@@ -190,13 +191,15 @@ int main(int argc, char* argv[]) {
     ground_truths.push_back(truth);
   }
 
+  cout << "...done" << endl;
+
   /*******************************************************************
    * CALCULATE ROOT MEAN SQUARE ERROR
    *******************************************************************/
    VectorXd RMSE;
 
-   RMSE = calculate_RMSE(predictions, ground_truths);
-   cout << "RMSE state:" << endl << RMSE << endl;
+   //RMSE = calculate_RMSE(predictions, ground_truths);
+   //cout << "RMSE state:" << endl << RMSE << endl;
 
    RMSE = calculate_RMSE(estimations_vec, ground_truths_vec);
    cout << "RMSE vec:" << endl << RMSE << endl;
