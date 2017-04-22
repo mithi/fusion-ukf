@@ -9,6 +9,7 @@ RadarPredictor::RadarPredictor(){
 
 MatrixXd RadarPredictor::compute_sigma_z(const MatrixXd sigma_x){
 
+  double THRESH = 1e-4;
   double px, py, v, yaw, vx, vy, rho, phi, rhodot;
 
   MatrixXd sigma = MatrixXd(NZ_RADAR, NSIGMA);
@@ -26,7 +27,7 @@ MatrixXd RadarPredictor::compute_sigma_z(const MatrixXd sigma_x){
 
     rho = sqrt(px * px + py * py);
     phi = atan2(py, px);
-    rhodot = (px * vx + py * vy) / rho;
+    rhodot = (rho > THRESH) ? ((px * vx + py * vy) / rho) : 0.0; // avoid division by zero
 
     sigma(0, c) = rho;
     sigma(1, c) = phi;
