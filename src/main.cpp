@@ -187,8 +187,8 @@ int main(int argc, char* argv[]) {
     estimations_vec.push_back(estimation.get_vec());
     predictions.push_back(prediction);
 
-    ground_truths_vec.push_back(all_truth_data[k].get_state());
-    ground_truths.push_back(truth);
+    ground_truths_vec.push_back(truth);
+    ground_truths.push_back(all_truth_data[k].get_state());
   }
 
   cout << "...done" << endl;
