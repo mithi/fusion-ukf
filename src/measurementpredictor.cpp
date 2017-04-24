@@ -89,17 +89,10 @@ MatrixXd MeasurementPredictor::compute_S(const MatrixXd sigma, const MatrixXd z)
 
 void MeasurementPredictor::process(const MatrixXd sigma_x, const DataPointType sensor_type){
 
-  // let the processor know whether it's processing a LIDAR or RADAR measurement
-  this->initialize(sensor_type);
-
-  // transform predicted sigma_x into measurement space
-  this->sigma_z = this->compute_sigma_z(sigma_x);
-
-  // get the mean predicted measurement vector z
-  this->z = this->compute_z(this->sigma_z);
-
-  // get the measurement covariance matrix S
-  this->S = this->compute_S(this->sigma_z, this->z);
+  this->initialize(sensor_type); // let the MeasurementPredictor know whether it's processing a LIDAR or RADAR measurement
+  this->sigma_z = this->compute_sigma_z(sigma_x); // transform predicted sigma_x into measurement space
+  this->z = this->compute_z(this->sigma_z); // get the mean predicted measurement vector z
+  this->S = this->compute_S(this->sigma_z, this->z); // get the measurement covariance matrix S
 }
 
 VectorXd MeasurementPredictor::getz() const {
