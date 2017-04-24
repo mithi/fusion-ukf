@@ -74,10 +74,6 @@ int main(int argc, char* argv[]) {
       sensor_data.set(timestamp, DataPointType::RADAR, radar_vec);
     }
 
-    //const double ZERO = 0.001;
-    //x = (x == 0 ? ZERO : x);
-    //y = (y == 0 ? ZERO : x);
-
     iss >> x;
     iss >> y;
     iss >> vx;
@@ -116,7 +112,6 @@ int main(int argc, char* argv[]) {
   /*******************************************************************
    * USE DATA AND FUSIONUKF FOR STATE ESTIMATIONS
    *******************************************************************/
-   cout << "Processing all data..." << endl;
 
    FusionUKF fusionUKF;
 
@@ -139,8 +134,6 @@ int main(int argc, char* argv[]) {
     /*******************************************************************
      * STORE ALL DATA FROM SENSOR AND GROUND TRUTH TO MEMORY
      *******************************************************************/
-    cout << "K: " << k << endl;
-
     truth =  all_truth_data[k].get_vec();
     sensor_data = all_sensor_data[k];
     timestamp = sensor_data.get_timestamp();
@@ -181,8 +174,6 @@ int main(int argc, char* argv[]) {
     /*******************************************************************
      * STORE ALL DATA IN APPROPRIATE VECTOR FOR RMSE CALCULATION LATER
      *******************************************************************/
-
-
     estimation.set(timestamp, DataPointType::STATE, prediction);
     estimations_vec.push_back(estimation.get_vec());
     predictions.push_back(prediction);
@@ -191,22 +182,17 @@ int main(int argc, char* argv[]) {
     ground_truths.push_back(all_truth_data[k].get_state());
   }
 
-  cout << "...done" << endl;
-
   /*******************************************************************
    * CALCULATE ROOT MEAN SQUARE ERROR
    *******************************************************************/
    VectorXd RMSE;
 
-   //RMSE = calculate_RMSE(predictions, ground_truths);
-   //cout << "RMSE state:" << endl << RMSE << endl;
-
    RMSE = calculate_RMSE(estimations_vec, ground_truths_vec);
-   cout << "RMSE vec:" << endl << RMSE << endl;
+   cout << "RMSE:" << endl << RMSE << endl;
   /*******************************************************************
    * PRINT TO CONSOLE IN A NICE FORMAT FOR DEBUGGING
    *******************************************************************/
-   print_EKF_data(RMSE, predictions, ground_truths, all_sensor_data);
+   //print_EKF_data(RMSE, predictions, ground_truths, all_sensor_data);
 
   /*******************************************************************
    * CLOSE FILES
