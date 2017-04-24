@@ -26,18 +26,6 @@ MatrixXd StatePredictor::compute_augmented_sigma(
     augmented_sigma.col(i + NAUGMENTED)  = augmented_x - SCALE * L.col(c);
   }
 
-  cout << "augmented P" << endl;
-  cout << augmented_P << endl;
-  cout << "augmented X" << endl;
-  cout << augmented_x << endl;
-  cout << "P squareroot" << endl;
-  cout << L << endl;
-
-  cout << "========================================" << endl;
-  cout << "SIGMA X AUGMENTED" << endl;
-  cout << augmented_sigma << endl;
-  cout << "========================================" << endl;
-
   return augmented_sigma;
 }
 
