@@ -8,9 +8,7 @@ MatrixXd StateUpdater::compute_Tc(const VectorXd predicted_x,
   int NZ = predicted_z.size();
   VectorXd dz;
   VectorXd dx;
-
-  MatrixXd Tc = MatrixXd(NX, NZ);
-  Tc.fill(0.0);
+  MatrixXd Tc = MatrixXd::Zero(NX, NZ);
 
   for (int c = 0; c < NSIGMA; c++){
 
