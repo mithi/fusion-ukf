@@ -31,7 +31,7 @@ MatrixXd StatePredictor::compute_augmented_sigma(
 
 MatrixXd StatePredictor::predict_sigma(const MatrixXd augmented_sigma, double dt){
 
-  double THRESH = 1e-4; //0.001
+  double THRESH = 0.001; //0.001 //1e-4
   double px, py, speed, yaw, yawrate, speed_noise, yawrate_noise;
   double p_px, p_py, p_speed, p_yaw, p_yawrate, p_speed_noise, p_yawrate_noise;
 
