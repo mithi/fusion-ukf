@@ -51,8 +51,6 @@ MatrixXd StatePredictor::predict_sigma(const MatrixXd augmented_sigma, double dt
     speed_noise = augmented_sigma(5, c);
     yawrate_noise = augmented_sigma(6, c);
 
-    yaw = normalize(yaw); //
-
    /*************************************
     * predicted the next state
     *************************************/
@@ -86,8 +84,6 @@ MatrixXd StatePredictor::predict_sigma(const MatrixXd augmented_sigma, double dt
     p_yaw += y_noise;
     p_yawrate += yawrate_noise * dt;
 
-    //p_yaw = normalize(p_yaw);
-
    /*************************************
     * Write the prediction to the appropriate column
     *************************************/
@@ -109,7 +105,6 @@ VectorXd StatePredictor::predict_x(const MatrixXd predicted_sigma){
 
   for (int c = 0; c < NSIGMA; c++){
     predicted_x += WEIGHTS[c] * predicted_sigma.col(c);
-    //predicted_x(3) = normalize(predicted_x(3));
   }
 
   return predicted_x;
@@ -127,7 +122,6 @@ MatrixXd StatePredictor::predict_P(const MatrixXd predicted_sigma, const VectorX
 
     dx = predicted_sigma.col(c) - predicted_x;
     dx(3) = normalize(dx(3));
-
     predicted_P += WEIGHTS[c] * dx * dx.transpose();
   }
 
