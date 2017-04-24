@@ -1,7 +1,6 @@
 #ifndef FUSIONUKF_H_
 #define FUSIONUKF_H_
 
-#include <stdlib.h>
 #include "../src/Eigen/Dense"
 #include "measurementpredictor.h"
 #include "statepredictor.h"
@@ -9,7 +8,6 @@
 #include "settings.h"
 #include "datapoint.h"
 
-using namespace::std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
@@ -24,6 +22,7 @@ class FusionUKF{
     StatePredictor statePredictor;
     MeasurementPredictor measurementPredictor;
     StateUpdater stateUpdater;
+
     //PRIVATE FUNCTIONS
     void initialize(const DataPoint data);
     void update(const DataPoint data);

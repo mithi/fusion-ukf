@@ -31,7 +31,7 @@ const double STD_PY = 0.15; // meters
 const double VAR_PX = STD_PX * STD_PX;
 const double VAR_PY = STD_PY * STD_PX;
 
-const int LAMBDA = 3 - NAUGMENTED; // tuned parameter
+const int LAMBDA = 3 - NAUGMENTED; // parameter for tuning
 const double SCALE = sqrt(LAMBDA + NAUGMENTED); // used to create augmented sigma points
 const double W = 0.5 / (LAMBDA + NAUGMENTED);
 const double W0 = LAMBDA / double(LAMBDA + NAUGMENTED);

@@ -1,12 +1,10 @@
 #ifndef STATEUPDATER_H_
 #define STATEUPDATER_H_
 
-#include <stdlib.h>
 #include "../src/Eigen/Dense"
 #include "settings.h"
 #include "tools.h"
 
-using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
@@ -34,6 +32,18 @@ class StateUpdater{
     MatrixXd P;
     double nis;
 
+    // PRIVATE FUNCTIONS
+    MatrixXd compute_Tc(const VectorXd predicted_x,
+                        const VectorXd predicted_z,
+                        const MatrixXd sigma_x,
+                        const MatrixXd sigma_z);
+    void update(const VectorXd z,
+                const MatrixXd S,
+                const MatrixXd Tc,
+                const VectorXd predicted_z,
+                const VectorXd predicted_x,
+                const MatrixXd predicted_P);
+                
   public:
     StateUpdater();
     void process(const VectorXd predicted_x,
@@ -46,18 +56,6 @@ class StateUpdater{
     VectorXd getx() const;
     MatrixXd getP() const;
     double get_nis() const;
-
-    // PRIVATE FUNCTIONS
-    MatrixXd compute_Tc(const VectorXd predicted_x,
-                        const VectorXd predicted_z,
-                        const MatrixXd sigma_x,
-                        const MatrixXd sigma_z);
-    void update(const VectorXd z,
-                const MatrixXd S,
-                const MatrixXd Tc,
-                const VectorXd predicted_z,
-                const VectorXd predicted_x,
-                const MatrixXd predicted_P);
 };
 
 #endif /* STATEUPDATER_H_ */
