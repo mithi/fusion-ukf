@@ -131,9 +131,9 @@ int main(int argc, char* argv[]) {
 
   for (int k = 0; k < all_sensor_data.size(); k++){
 
-    /*******************************************************************
-     * STORE ALL DATA FROM SENSOR AND GROUND TRUTH TO MEMORY
-     *******************************************************************/
+   /*******************************************************************
+    * STORE ALL DATA FROM SENSOR AND GROUND TRUTH TO MEMORY
+    *******************************************************************/
     truth =  all_truth_data[k].get_vec();
     sensor_data = all_sensor_data[k];
     timestamp = sensor_data.get_timestamp();
@@ -142,17 +142,16 @@ int main(int argc, char* argv[]) {
     sensor_name = ((sensor_type == DataPointType::RADAR) ? "radar" : "lidar");
     measurement = sensor_data.get_state();
 
-    /*******************************************************************
-     * PREDICT NEXT STATE USING FUSIONUKF
-     *******************************************************************/
+   /*******************************************************************
+    * PREDICT NEXT STATE USING FUSIONUKF
+    *******************************************************************/
     fusionUKF.process(sensor_data);
     prediction = fusionUKF.get();
     nis = fusionUKF.get_nis();
 
-    /*******************************************************************
-     * WRITE ALL INFO IN OUTPUT FILE
-     *******************************************************************/
-
+   /*******************************************************************
+    * WRITE ALL INFO IN OUTPUT FILE
+    *******************************************************************/
     out_file << timestamp << "\t";
     out_file << prediction(0) << "\t";
     out_file << prediction(1) << "\t";
@@ -171,9 +170,9 @@ int main(int argc, char* argv[]) {
     out_file << truth(2) << "\t";
     out_file << truth(3) << "\n";
 
-    /*******************************************************************
-     * STORE ALL DATA IN APPROPRIATE VECTOR FOR RMSE CALCULATION LATER
-     *******************************************************************/
+   /*******************************************************************
+    * STORE ALL DATA IN APPROPRIATE VECTOR FOR RMSE CALCULATION LATER
+    *******************************************************************/
     estimation.set(timestamp, DataPointType::STATE, prediction);
     estimations_vec.push_back(estimation.get_vec());
     predictions.push_back(prediction);
@@ -189,6 +188,7 @@ int main(int argc, char* argv[]) {
 
    RMSE = calculate_RMSE(estimations_vec, ground_truths_vec);
    cout << "RMSE:" << endl << RMSE << endl;
+
   /*******************************************************************
    * PRINT TO CONSOLE IN A NICE FORMAT FOR DEBUGGING
    *******************************************************************/
@@ -199,6 +199,7 @@ int main(int argc, char* argv[]) {
    *******************************************************************/
   if (out_file.is_open()) { out_file.close(); }
   if (in_file.is_open()) { in_file.close(); }
+  
   cout << "Done!" << endl;
   return 0;
 }
