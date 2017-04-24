@@ -6,7 +6,6 @@ FusionUKF::FusionUKF(){
 
 void FusionUKF::initialize(const DataPoint data){
   this->x = data.get_state();
-  cout << this->x << endl;
   this->P = MatrixXd::Identity(NX, NX);
   this->timestamp = data.get_timestamp();
   this->initialized = true;
@@ -29,12 +28,6 @@ void FusionUKF::update(const DataPoint data){
   this->P = this->statePredictor.getP();
   sigma_x = this->statePredictor.get_sigma();
 
-  cout << "========================================" << endl;
-  cout << "SIGMA X PREDICTED" << endl;
-  cout << sigma_x << endl;
-  cout << "========================================" << endl;
-
-
   // MEASUREMENT PREDICTION
   // get predicted measurement, covariance of predicted measurement, predicted sigma points in measurement space
   this->measurementPredictor.process(sigma_x, data.get_type());
@@ -42,28 +35,12 @@ void FusionUKF::update(const DataPoint data){
   S = this->measurementPredictor.getS();
   sigma_z = this->measurementPredictor.get_sigma();
 
-  if (data.get_type() == DataPointType::RADAR) {
-    cout << "========================================" << endl;
-    cout << "SIGMA Z PREDICTED" << endl;
-    cout << sigma_z << endl;
-    cout << "PREDICTED Z" << endl;
-    cout << predicted_z << endl;
-    cout << "========================================" << endl;
-  }
-
   // STATE UPDATE
   // updated the state and covariance of state... also get the nis
   this->stateUpdater.process(this->x, predicted_z, data.get(), S, P, sigma_x, sigma_z);
   this->x = this->stateUpdater.getx();
   this->P  = this->stateUpdater.getP();
   this->nis = this->stateUpdater.get_nis();
-
-  cout << "========================================" << endl;
-  cout << "UPDATED X" << endl;
-  cout << this->x << endl;
-  cout << "UPDATED P" << endl;
-  cout << this->P << endl;
-  cout << "========================================" << endl;
 
   // update timestamp
   this->timestamp = data.get_timestamp();
