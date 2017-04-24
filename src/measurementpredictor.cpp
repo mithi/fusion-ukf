@@ -66,9 +66,6 @@ MatrixXd MeasurementPredictor::compute_z(const MatrixXd sigma){
   VectorXd z = VectorXd(this->nz);
   z.fill(0.0);
 
-  for (int c = 0; c < NSIGMA; c++)
-    cout << "WEIGHTS:" << WEIGHTS[c] << endl;
-
   for(int c = 0; c < NSIGMA; c++){
     z += WEIGHTS[c] * sigma.col(c);
   }
@@ -85,7 +82,7 @@ MatrixXd MeasurementPredictor::compute_S(const MatrixXd sigma, const MatrixXd z)
   for (int c = 0; c < NSIGMA; c++){
 
     dz = sigma.col(c) - z;
-    dz(1) = normalize(dz(1));
+    if (this->nz == NZ_RADAR) dz(1) = normalize(dz(1));
 
     S += WEIGHTS[c] * dz * dz.transpose();
   }
