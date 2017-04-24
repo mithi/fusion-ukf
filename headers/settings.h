@@ -5,8 +5,8 @@ enum class DataPointType{
   LIDAR, RADAR, STATE, TRUTH
 };
 
-const int NZ_RADAR = 3; // number of measurements
-const int NZ_LIDAR = 2;
+const int NZ_RADAR = 3; // number of radar measurements
+const int NZ_LIDAR = 2; // number of lidar measurements
 const int NX = 5; // number of states
 const int NAUGMENTED = NX + 2; // number of states plus two noise values
 const int NSIGMA = NAUGMENTED * 2 + 1; // number of sigma points
