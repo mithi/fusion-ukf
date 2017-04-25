@@ -37,7 +37,7 @@ void FusionUKF::update(const DataPoint data){
 
   // STATE UPDATE
   // updated the state and covariance of state... also get the nis
-  this->stateUpdater.process(this->x, predicted_z, data.get(), S, P, sigma_x, sigma_z);
+  this->stateUpdater.process(this->x, predicted_z, data.get(), S, this->P, sigma_x, sigma_z);
   this->x = this->stateUpdater.getx();
   this->P  = this->stateUpdater.getP();
   this->nis = this->stateUpdater.get_nis();
