@@ -4,17 +4,18 @@ A Kalman filter can be used anywhere where you have uncertain information about 
 and you want to make an educated guess about what the system is going to do next. 
 
 **In this case, we have two 'noisy' sensors:**
-- A lidar sensor that measures our position in cartesian-coordinates `(x, y)`
-- A radar sensor that measures our position and velocity in polar coordinates `(rho, phi, drho)`
+- A lidar sensor that measures a tracked object's position in cartesian-coordinates `(x, y)`
+- A radar sensor that measures a tracked object's position and relative velocity (the velocity within line of sight) in polar coordinates `(rho, phi, drho)`
 
 **We want to predict a tracked object's position, how fast it's going in what direction, and how fast it is
-turning (yaw rate) at any point in time. 
+turning (yaw rate) at any point in time.** 
 - In essence we want to get: the position of the system in cartesian coordinates, the velocity magnitude, the yaw angle in radians, and yaw rate  in radians per second `(x, y, v, yaw, yawrate)`
 - We are assuming a **constant turn/yaw rate and velocity magnitude model** (CRTV) for this particular system
 
 **This unscented kalman filter does just that.** 
 
 - NOTE: Compared with an [Extended Kalman Filter](https://github.com/mithi/Fusion-EKF-CPP) with a constant velocity model, RMSE should be lower for the unscented Kalman filter especially for velocity. The CTRV model is more precise than a constant velocity model. And UKF is also known for handling non-linear equations better than EKF.
+- https://www.seas.harvard.edu/courses/cs281/papers/unscented.pdf
 
 -----
 # CONTENTS
