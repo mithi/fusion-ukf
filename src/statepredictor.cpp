@@ -105,7 +105,6 @@ VectorXd StatePredictor::predict_x(const MatrixXd predicted_sigma){
 
 MatrixXd StatePredictor::predict_P(const MatrixXd predicted_sigma, const VectorXd predicted_x){
 
-
   MatrixXd predicted_P = MatrixXd::Zero(NX, NX);
 
   VectorXd dx = VectorXd(NX);
