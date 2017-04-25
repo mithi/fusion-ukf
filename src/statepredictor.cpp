@@ -28,7 +28,7 @@ MatrixXd StatePredictor::compute_augmented_sigma(const VectorXd current_x, const
 
 MatrixXd StatePredictor::predict_sigma(const MatrixXd augmented_sigma, double dt){
 
-  double THRESH = 0.001; //0.001 //1e-4
+  double THRESH = 0.001;
   double px, py, speed, yaw, yawrate, speed_noise, yawrate_noise;
   double p_px, p_py, p_speed, p_yaw, p_yawrate, p_speed_noise, p_yawrate_noise;
 
@@ -48,7 +48,7 @@ MatrixXd StatePredictor::predict_sigma(const MatrixXd augmented_sigma, double dt
     yawrate_noise = augmented_sigma(6, c);
 
    /*************************************
-    * predicted the next state
+    * predict the next state
     *************************************/
     p_speed = speed; // constant
     p_yaw = yaw + yawrate * dt;
@@ -67,7 +67,7 @@ MatrixXd StatePredictor::predict_sigma(const MatrixXd augmented_sigma, double dt
     }
 
    /*************************************
-    * Add noise
+    * Add noise to the predicted state
     *************************************/
     double dt2 = dt * dt;
     double p_noise = 0.5 * speed_noise * dt2;
