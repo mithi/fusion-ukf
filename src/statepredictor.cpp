@@ -14,11 +14,11 @@ MatrixXd StatePredictor::compute_augmented_sigma(const VectorXd& current_x, cons
   augmented_P(NX, NX) = VAR_SPEED_NOISE;
   augmented_P(NX + 1, NX + 1) = VAR_YAWRATE_NOISE;
 
-  MatrixXd L = augmented_P.llt().matrixL();
+  const MatrixXd L = augmented_P.llt().matrixL();
   augmented_sigma.col(0) = augmented_x;
 
   for (int c = 0; c < NAUGMENTED; c++){
-    int i = c + 1;
+    const int i = c + 1;
     augmented_sigma.col(i)  = augmented_x + SCALE * L.col(c);
     augmented_sigma.col(i + NAUGMENTED)  = augmented_x - SCALE * L.col(c);
   }
@@ -28,56 +28,53 @@ MatrixXd StatePredictor::compute_augmented_sigma(const VectorXd& current_x, cons
 
 MatrixXd StatePredictor::predict_sigma(const MatrixXd& augmented_sigma, double dt){
 
-  double THRESH = 0.001;
-  double px, py, speed, yaw, yawrate, speed_noise, yawrate_noise;
-  double p_px, p_py, p_speed, p_yaw, p_yawrate, p_speed_noise, p_yawrate_noise;
-
+  const double THRESH = 0.001;
   MatrixXd predicted_sigma = MatrixXd(NX, NSIGMA);
 
-  for (int c = 0; c < NSIGMA; c++){
+  for (int c = 0; c < NSIGMA; ++c){
 
    /*************************************
     * Get the current state
     *************************************/
-    px = augmented_sigma(0, c);
-    py = augmented_sigma(1, c);
-    speed = augmented_sigma(2, c);
-    yaw = augmented_sigma(3, c);
-    yawrate = augmented_sigma(4, c);
-    speed_noise = augmented_sigma(5, c);
-    yawrate_noise = augmented_sigma(6, c);
+    const double px = augmented_sigma(0, c);
+    const double py = augmented_sigma(1, c);
+    const double speed = augmented_sigma(2, c);
+    const double yaw = augmented_sigma(3, c);
+    const double yawrate = augmented_sigma(4, c);
+    const double speed_noise = augmented_sigma(5, c);
+    const double yawrate_noise = augmented_sigma(6, c);
 
    /*************************************
-    * predict the next state
+    * predict the next state with noise
+    * USING THE CTRV MODEL
     *************************************/
-    p_speed = speed; // constant
-    p_yaw = yaw + yawrate * dt;
-    p_yawrate = yawrate; // constant
+    const double cos_yaw = cos(yaw);
+    const double sin_yaw = sin(yaw);
+    const double dt2 = dt * dt;
+    const double p_noise = 0.5 * speed_noise * dt2;  // predicted position noise
+    const double y_noise = 0.5 * yawrate_noise * dt2; // predicted yaw noise
+    const double dyaw = yawrate * dt; //change in yaw
+    const double dspeed = speed * dt; //change in speed
+
+    const double p_speed = speed + speed_noise * dt; // predicted speed = assumed constant speed + noise
+    const double p_yaw = yaw + dyaw + y_noise; // predicted yaw
+    const double p_yawrate = yawrate + yawrate_noise * dt; // predicted yaw rate = assumed constant yawrate + noise
+
+    double p_px, p_py; // where predicted positions will be stored
 
     if (fabs(yawrate) <= THRESH){
+
       // moving straight
-      p_px = px + speed * dt * cos(yaw);
-      p_py = py + speed * dt * sin(yaw);
+      p_px = px + dspeed * cos_yaw + p_noise * cos_yaw;
+      p_py = py + dspeed * sin_yaw + p_noise * sin_yaw;
 
-    } else {
+    } else{
 
-      double theta = yaw + yawrate * dt;
-      p_px = px + speed / yawrate * (sin(theta) - sin(yaw));
-      p_py = py + speed / yawrate * (cos(yaw) - cos(theta));
+      const double k = speed / yawrate;
+      const double theta = yaw + dyaw;
+      p_px = px + k * (sin(theta) - sin_yaw) + p_noise * cos_yaw;
+      p_py = py + k * (cos_yaw - cos(theta)) + p_noise * cos_yaw ;
     }
-
-   /*************************************
-    * Add noise to the predicted state
-    *************************************/
-    double dt2 = dt * dt;
-    double p_noise = 0.5 * speed_noise * dt2;
-    double y_noise = 0.5 * yawrate_noise * dt2;
-
-    p_px += p_noise * cos(yaw);
-    p_py += p_noise * sin(yaw);
-    p_speed += speed_noise * dt;
-    p_yaw += y_noise;
-    p_yawrate += yawrate_noise * dt;
 
    /*************************************
     * Write the prediction to the appropriate column
