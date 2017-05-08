@@ -2,7 +2,7 @@
 
 StatePredictor::StatePredictor(){}
 
-MatrixXd StatePredictor::compute_augmented_sigma(const VectorXd current_x, const MatrixXd current_P){
+MatrixXd StatePredictor::compute_augmented_sigma(const VectorXd& current_x, const MatrixXd& current_P){
 
   MatrixXd augmented_sigma = MatrixXd::Zero(NAUGMENTED, NSIGMA);
   VectorXd augmented_x = VectorXd::Zero(NAUGMENTED);
@@ -26,7 +26,7 @@ MatrixXd StatePredictor::compute_augmented_sigma(const VectorXd current_x, const
   return augmented_sigma;
 }
 
-MatrixXd StatePredictor::predict_sigma(const MatrixXd augmented_sigma, double dt){
+MatrixXd StatePredictor::predict_sigma(const MatrixXd& augmented_sigma, double dt){
 
   double THRESH = 0.001;
   double px, py, speed, yaw, yawrate, speed_noise, yawrate_noise;
@@ -92,7 +92,7 @@ MatrixXd StatePredictor::predict_sigma(const MatrixXd augmented_sigma, double dt
   return predicted_sigma;
 }
 
-VectorXd StatePredictor::predict_x(const MatrixXd predicted_sigma){
+VectorXd StatePredictor::predict_x(const MatrixXd& predicted_sigma){
 
   VectorXd predicted_x = VectorXd::Zero(NX);
 
@@ -103,7 +103,7 @@ VectorXd StatePredictor::predict_x(const MatrixXd predicted_sigma){
   return predicted_x;
 }
 
-MatrixXd StatePredictor::predict_P(const MatrixXd predicted_sigma, const VectorXd predicted_x){
+MatrixXd StatePredictor::predict_P(const MatrixXd& predicted_sigma, const VectorXd& predicted_x){
 
   MatrixXd predicted_P = MatrixXd::Zero(NX, NX);
 
@@ -119,7 +119,7 @@ MatrixXd StatePredictor::predict_P(const MatrixXd predicted_sigma, const VectorX
   return predicted_P;
 }
 
-void StatePredictor::process(VectorXd current_x, MatrixXd current_P, double dt){
+void StatePredictor::process(VectorXd& current_x, MatrixXd& current_P, double dt){
 
   MatrixXd augmented_sigma = compute_augmented_sigma(current_x, current_P);
   this->sigma = predict_sigma(augmented_sigma, dt);

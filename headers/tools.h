@@ -8,11 +8,10 @@
 #include <stdlib.h>
 #include "../src/Eigen/Dense"
 
-using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-VectorXd calculate_RMSE(const vector<VectorXd> &estimations, const vector<VectorXd> &ground_truths);
+VectorXd calculate_RMSE(const std::vector<VectorXd> &estimations, const std::vector<VectorXd> &ground_truths);
 double normalize(const double a);
 
 #endif /* TOOLS_H_ */

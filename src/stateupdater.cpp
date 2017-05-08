@@ -2,8 +2,8 @@
 
 StateUpdater::StateUpdater(){}
 
-MatrixXd StateUpdater::compute_Tc(const VectorXd predicted_x,
-  const VectorXd predicted_z, const MatrixXd sigma_x, const MatrixXd sigma_z){
+MatrixXd StateUpdater::compute_Tc(const VectorXd& predicted_x,
+  const VectorXd& predicted_z, const MatrixXd& sigma_x, const MatrixXd& sigma_z){
 
   int NZ = predicted_z.size();
   VectorXd dz;
@@ -24,8 +24,8 @@ MatrixXd StateUpdater::compute_Tc(const VectorXd predicted_x,
   return Tc;
 }
 
-void StateUpdater::update(const VectorXd z, const MatrixXd S, const MatrixXd Tc,
-  const VectorXd predicted_z, const VectorXd predicted_x, const MatrixXd predicted_P){
+void StateUpdater::update(const VectorXd& z, const MatrixXd& S, const MatrixXd& Tc,
+  const VectorXd& predicted_z, const VectorXd& predicted_x, const MatrixXd& predicted_P){
 
   MatrixXd Si = S.inverse();
   MatrixXd K = Tc * Si;
@@ -38,9 +38,9 @@ void StateUpdater::update(const VectorXd z, const MatrixXd S, const MatrixXd Tc,
   this->nis = dz.transpose() * Si * dz;
 }
 
-void StateUpdater::process(const VectorXd predicted_x, const VectorXd predicted_z,
-  const VectorXd z, const MatrixXd S, const MatrixXd predicted_P,
-  const MatrixXd sigma_x, const MatrixXd sigma_z){
+void StateUpdater::process(const VectorXd& predicted_x, const VectorXd& predicted_z,
+  const VectorXd& z, const MatrixXd& S, const MatrixXd& predicted_P,
+  const MatrixXd& sigma_x, const MatrixXd& sigma_z){
 
   MatrixXd Tc = this->compute_Tc(predicted_x, predicted_z, sigma_x, sigma_z);
   this->update(z, S, Tc, predicted_z, predicted_x, predicted_P);

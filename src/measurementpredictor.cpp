@@ -23,7 +23,7 @@ void MeasurementPredictor::initialize(const DataPointType sensor_type){
   }
 }
 
-MatrixXd MeasurementPredictor::compute_sigma_z(const MatrixXd sigma_x){
+MatrixXd MeasurementPredictor::compute_sigma_z(const MatrixXd& sigma_x){
 
   const double THRESH = 1e-4;
   double px, py, v, yaw, vx, vy, rho, phi, rhodot;
@@ -59,7 +59,7 @@ MatrixXd MeasurementPredictor::compute_sigma_z(const MatrixXd sigma_x){
   return sigma;
 }
 
-MatrixXd MeasurementPredictor::compute_z(const MatrixXd sigma){
+MatrixXd MeasurementPredictor::compute_z(const MatrixXd& sigma){
 
   VectorXd z = VectorXd::Zero(this->nz);
 
@@ -70,7 +70,7 @@ MatrixXd MeasurementPredictor::compute_z(const MatrixXd sigma){
   return z;
 }
 
-MatrixXd MeasurementPredictor::compute_S(const MatrixXd sigma, const MatrixXd z){
+MatrixXd MeasurementPredictor::compute_S(const MatrixXd& sigma, const MatrixXd& z){
 
   VectorXd dz;
   MatrixXd S = MatrixXd::Zero(this->nz, this->nz);
@@ -87,7 +87,7 @@ MatrixXd MeasurementPredictor::compute_S(const MatrixXd sigma, const MatrixXd z)
   return S;
 }
 
-void MeasurementPredictor::process(const MatrixXd sigma_x, const DataPointType sensor_type){
+void MeasurementPredictor::process(const MatrixXd& sigma_x, const DataPointType sensor_type){
 
   this->initialize(sensor_type); // let the MeasurementPredictor know whether it's processing a LIDAR or RADAR measurement
   this->sigma_z = this->compute_sigma_z(sigma_x); // transform predicted sigma_x into measurement space

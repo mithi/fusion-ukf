@@ -4,14 +4,14 @@ FusionUKF::FusionUKF(){
   this->initialized = false;
 }
 
-void FusionUKF::initialize(const DataPoint data){
+void FusionUKF::initialize(const DataPoint& data){
   this->x = data.get_state();
   this->P = MatrixXd::Identity(NX, NX);
   this->timestamp = data.get_timestamp();
   this->initialized = true;
 }
 
-void FusionUKF::update(const DataPoint data){
+void FusionUKF::update(const DataPoint& data){
 
   VectorXd predicted_z;
   MatrixXd sigma_x;
@@ -46,7 +46,7 @@ void FusionUKF::update(const DataPoint data){
   this->timestamp = data.get_timestamp();
 }
 
-void FusionUKF::process(const DataPoint data){
+void FusionUKF::process(const DataPoint& data){
   this->initialized ? this->update(data) : this->initialize(data);
 }
 

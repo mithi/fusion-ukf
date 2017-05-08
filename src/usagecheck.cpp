@@ -44,7 +44,7 @@ void print_EKF_data(const VectorXd &RMSE, const vector<VectorXd> &estimations,
   cout << setw(15) << left << "RMSE:" << " | " << RMSE(0) << " | " << RMSE(1) << " | " << RMSE(2) << " | " << RMSE(3) << " | " << endl;
   cout << "----------------------------------------------------------------------------------------------------------" << endl;
 
-  for (int k = 0; k < all_sensor_data.size(); k++){
+  for (int k = 0; k < all_sensor_data.size(); ++k){
 
     cout << "----------------------------------------------------------------------------------------------------------" << endl;
     cout  << "# " << k + 1 << " : " << all_sensor_data[k].get_timestamp() << endl;

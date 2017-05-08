@@ -30,13 +30,13 @@ class MeasurementPredictor{
 
     // PRIVATE FUNCTIONS
     void initialize(const DataPointType sensor_type);
-    MatrixXd compute_sigma_z(const MatrixXd sigma_x);
-    MatrixXd compute_z(const MatrixXd sigma_z);
-    MatrixXd compute_S(const MatrixXd sigma_z, const MatrixXd predicted_z);
+    MatrixXd compute_sigma_z(const MatrixXd& sigma_x);
+    MatrixXd compute_z(const MatrixXd& sigma_z);
+    MatrixXd compute_S(const MatrixXd& sigma_z, const MatrixXd& predicted_z);
 
   public:
     MeasurementPredictor();
-    void process(const MatrixXd sigma_x, const DataPointType sensor_type);
+    void process(const MatrixXd& sigma_x, const DataPointType sensor_type);
     MatrixXd get_sigma() const;
     MatrixXd getS() const;
     VectorXd getz() const;

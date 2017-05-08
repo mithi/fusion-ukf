@@ -24,12 +24,12 @@ class FusionUKF{
     StateUpdater stateUpdater;
 
     //PRIVATE FUNCTIONS
-    void initialize(const DataPoint data);
-    void update(const DataPoint data);
+    void initialize(const DataPoint& data);
+    void update(const DataPoint& data);
 
   public:
     FusionUKF();
-    void process(const DataPoint data);
+    void process(const DataPoint& data);
     VectorXd get() const;
     double get_nis() const;
 };

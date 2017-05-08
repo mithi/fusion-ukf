@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) {
    string sensor_name;
    double nis;
 
-  for (int k = 0; k < all_sensor_data.size(); k++){
+  for (int k = 0; k < all_sensor_data.size(); ++k){
 
    /*******************************************************************
     * STORE ALL DATA FROM SENSOR AND GROUND TRUTH TO MEMORY
@@ -199,7 +199,7 @@ int main(int argc, char* argv[]) {
    *******************************************************************/
   if (out_file.is_open()) { out_file.close(); }
   if (in_file.is_open()) { in_file.close(); }
-  
+
   cout << "Done!" << endl;
   return 0;
 }

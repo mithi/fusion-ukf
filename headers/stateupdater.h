@@ -33,26 +33,26 @@ class StateUpdater{
     double nis;
 
     // PRIVATE FUNCTIONS
-    MatrixXd compute_Tc(const VectorXd predicted_x,
-                        const VectorXd predicted_z,
-                        const MatrixXd sigma_x,
-                        const MatrixXd sigma_z);
-    void update(const VectorXd z,
-                const MatrixXd S,
-                const MatrixXd Tc,
-                const VectorXd predicted_z,
-                const VectorXd predicted_x,
-                const MatrixXd predicted_P);
-                
+    MatrixXd compute_Tc(const VectorXd& predicted_x,
+                        const VectorXd& predicted_z,
+                        const MatrixXd& sigma_x,
+                        const MatrixXd& sigma_z);
+    void update(const VectorXd& z,
+                const MatrixXd& S,
+                const MatrixXd& Tc,
+                const VectorXd& predicted_z,
+                const VectorXd& predicted_x,
+                const MatrixXd& predicted_P);
+
   public:
     StateUpdater();
-    void process(const VectorXd predicted_x,
-                 const VectorXd predicted_z,
-                 const VectorXd z,
-                 const MatrixXd S,
-                 const MatrixXd predicted_P,
-                 const MatrixXd sigma_x,
-                 const MatrixXd sigma_z);
+    void process(const VectorXd& predicted_x,
+                 const VectorXd& predicted_z,
+                 const VectorXd& z,
+                 const MatrixXd& S,
+                 const MatrixXd& predicted_P,
+                 const MatrixXd& sigma_x,
+                 const MatrixXd& sigma_z);
     VectorXd getx() const;
     MatrixXd getP() const;
     double get_nis() const;
