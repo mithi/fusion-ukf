@@ -26,24 +26,23 @@ void MeasurementPredictor::initialize(const DataPointType sensor_type){
 MatrixXd MeasurementPredictor::compute_sigma_z(const MatrixXd& sigma_x){
 
   const double THRESH = 1e-4;
-  double px, py, v, yaw, vx, vy, rho, phi, rhodot;
   MatrixXd sigma = MatrixXd::Zero(this->nz, NSIGMA);
 
   for (int c = 0; c < NSIGMA; c++){
 
     if (this->current_type == DataPointType::RADAR){
 
-      px = sigma_x(0, c);
-      py = sigma_x(1, c);
-      v = sigma_x(2, c);
-      yaw = sigma_x(3, c);
+      const double px = sigma_x(0, c);
+      const double py = sigma_x(1, c);
+      const double v = sigma_x(2, c);
+      const double yaw = sigma_x(3, c);
 
-      vx = cos(yaw) * v;
-      vy = sin(yaw) * v;
+      const double vx = cos(yaw) * v;
+      const double vy = sin(yaw) * v;
 
-      rho = sqrt(px * px + py * py);
-      phi = atan2(py, px);
-      rhodot = (rho > THRESH) ? ((px * vx + py * vy) / rho) : 0.0; // avoid division by zero
+      const double rho = sqrt(px * px + py * py);
+      const double phi = atan2(py, px);
+      const double rhodot = (rho > THRESH) ? ((px * vx + py * vy) / rho) : 0.0; // avoid division by zero
 
       sigma(0, c) = rho;
       sigma(1, c) = phi;

@@ -62,13 +62,13 @@ MatrixXd StatePredictor::predict_sigma(const MatrixXd& augmented_sigma, double d
 
     double p_px, p_py; // where predicted positions will be stored
 
-    if (fabs(yawrate) <= THRESH){
+    if (fabs(yawrate) <= THRESH) {
 
       // moving straight
       p_px = px + dspeed * cos_yaw + p_noise * cos_yaw;
       p_py = py + dspeed * sin_yaw + p_noise * sin_yaw;
 
-    } else{
+    } else {
 
       const double k = speed / yawrate;
       const double theta = yaw + dyaw;
