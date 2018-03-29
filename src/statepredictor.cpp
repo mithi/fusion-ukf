@@ -73,7 +73,7 @@ MatrixXd StatePredictor::predict_sigma(const MatrixXd& augmented_sigma, double d
       const double k = speed / yawrate;
       const double theta = yaw + dyaw;
       p_px = px + k * (sin(theta) - sin_yaw) + p_noise * cos_yaw;
-      p_py = py + k * (cos_yaw - cos(theta)) + p_noise * cos_yaw ;
+      p_py = py + k * (cos_yaw - cos(theta)) + p_noise * sin_yaw ;
     }
 
    /*************************************
