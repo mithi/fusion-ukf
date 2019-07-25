@@ -25,13 +25,13 @@ VectorXd DataPoint::get_state() const{
 
   VectorXd state(NX);
 
-  if (this->data_type == DataPointType::LIDAR){
+  if(this->data_type == DataPointType::LIDAR){
 
     double px = this->raw(0);
     double py = this->raw(1);
     state << px, py, 0.0, 0.0, 0.0;
 
-  } else if (this->data_type == DataPointType::RADAR){
+  }else if(this->data_type == DataPointType::RADAR){
 
     double rho = this->raw(0);
     double phi = this->raw(1);
@@ -40,10 +40,10 @@ VectorXd DataPoint::get_state() const{
     double py = rho * sin(phi);
     state << px, py, 0.0, 0.0, 0.0;
 
-  } else if (this->data_type == DataPointType::STATE){
+  }else if(this->data_type == DataPointType::STATE){
     state = this->raw;
 
-  } else if (this->data_type == DataPointType::TRUTH){
+  }else if(this->data_type == DataPointType::TRUTH){
 
     double px = this->raw(0);
     double py = this->raw(1);
@@ -62,13 +62,13 @@ VectorXd DataPoint::get_vec() const{
 
   VectorXd vec(NX - 1);
 
-  if (this->data_type == DataPointType::LIDAR){
+  if(this->data_type == DataPointType::LIDAR){
 
     double px = this->raw(0);
     double py = this->raw(1);
     vec << px, py, 0.0, 0.0;
 
-  } else if (this->data_type == DataPointType::RADAR){
+  }else if(this->data_type == DataPointType::RADAR){
 
     double rho = this->raw(0);
     double phi = this->raw(1);
@@ -77,7 +77,7 @@ VectorXd DataPoint::get_vec() const{
 
     vec << px, py, 0.0, 0.0;
 
-  } else if (this->data_type == DataPointType::STATE){
+  }else if(this->data_type == DataPointType::STATE){
 
     double px = this->raw(0);
     double py = this->raw(1);
@@ -89,7 +89,7 @@ VectorXd DataPoint::get_vec() const{
 
     vec << px, py, vx, vy;
 
-  } else if (this->data_type == DataPointType::TRUTH){
+  }else if(this->data_type == DataPointType::TRUTH){
 
     vec = this->raw;
   }
@@ -108,14 +108,14 @@ DataPointType DataPoint::get_type() const{
 
 void DataPoint::print() const{
 
-  if (this->initialized){
+  if(this->initialized){
 
     cout << "Timestamp: " << this->timestamp << endl;
     cout << "Sensor ID: " << static_cast<int>(this->data_type) << " (LIDAR = 0 | RADAR = 1 | STATE = 2) " << endl;
     cout << "Raw Data: " << endl;
     cout << this->raw << endl;
 
-  } else {
+  }else{
 
     cout << "DataPoint is not initialized." << endl;
   }

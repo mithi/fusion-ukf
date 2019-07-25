@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
 
     iss >> sensor_id;
 
-    if (sensor_id.compare("L") == 0){
+    if(sensor_id.compare("L") == 0){
 
       iss >> val1;
       iss >> val2;
@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
       lidar_vec << val1, val2;
       sensor_data.set(timestamp, DataPointType::LIDAR, lidar_vec);
 
-    } else if (sensor_id.compare("R") == 0){
+    }else if(sensor_id.compare("R") == 0){
 
       iss >> val1;
       iss >> val2;
@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) {
    string sensor_name;
    double nis;
 
-  for (int k = 0; k < all_sensor_data.size(); ++k){
+  for(int k = 0; k < all_sensor_data.size(); ++k){
 
    /*******************************************************************
     * STORE ALL DATA FROM SENSOR AND GROUND TRUTH TO MEMORY
@@ -197,8 +197,12 @@ int main(int argc, char* argv[]) {
   /*******************************************************************
    * CLOSE FILES
    *******************************************************************/
-  if (out_file.is_open()) { out_file.close(); }
-  if (in_file.is_open()) { in_file.close(); }
+  if(out_file.is_open()) { 
+    out_file.close();
+  }
+  if(in_file.is_open()) {
+    in_file.close();
+  }
 
   cout << "Done!" << endl;
   return 0;
